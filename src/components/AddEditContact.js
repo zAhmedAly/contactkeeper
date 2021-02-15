@@ -107,13 +107,16 @@ const AddEditContact = () => {
               disabled={!name || !email || !phone}
             >
               {addLoading ? (
-                <Spinner
-                  as='span'
-                  animation='border'
-                  size='sm'
-                  role='status'
-                  aria-hidden='true'
-                />
+                <>
+                  <Spinner
+                    as='span'
+                    animation='border'
+                    size='sm'
+                    role='status'
+                    aria-hidden='true'
+                  />{' '}
+                  Saving ...
+                </>
               ) : (
                 'Add Contact'
               )}
