@@ -1,45 +1,48 @@
-import { useReducer } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useReducer } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-import ContactContext from "./ContactContext";
-import contactReducer from "./ContactReducer";
+import ContactContext from './ContactContext';
+import contactReducer from './ContactReducer';
 import {
   GET_CONTACTS_REQUEST,
   GET_CONTACTS_SUCCESS,
   GET_CONTACTS_FAIL,
   FILTER_CONTACTS,
   CLEAR_FILTER,
-} from "../types";
+  ADD_CONTACT_REQUEST,
+  ADD_CONTACT_SUCCESS,
+  ADD_CONTACT_FAIL,
+} from '../types';
 
 const ContactState = (props) => {
   const data = [
     {
       id: uuidv4(),
-      name: "Ahmed Aly",
-      email: "ahmed@gmail.com",
-      phone: "818-970-9072",
-      type: "personal",
+      name: 'Ahmed Aly',
+      email: 'ahmed@gmail.com',
+      phone: '818-970-9072',
+      type: 'personal',
     },
     {
       id: uuidv4(),
-      name: "Edward Yue",
-      email: "edward@gmail.com",
-      phone: "302-387-0987",
-      type: "professional",
+      name: 'Edward Yue',
+      email: 'edward@gmail.com',
+      phone: '302-387-0987',
+      type: 'professional',
     },
     {
       id: uuidv4(),
-      name: "Reham Kassem",
-      email: "reham@gmail.com",
-      phone: "818-731-0560",
-      type: "personal",
+      name: 'Reham Kassem',
+      email: 'reham@gmail.com',
+      phone: '818-731-0560',
+      type: 'personal',
     },
     {
       id: uuidv4(),
-      name: "Habiba Aly",
-      email: "habiba@gmail.com",
-      phone: "661-259-3893",
-      type: "personal",
+      name: 'Habiba Aly',
+      email: 'habiba@gmail.com',
+      phone: '661-259-3893',
+      type: 'personal',
     },
   ];
 
@@ -48,6 +51,7 @@ const ContactState = (props) => {
     filtered: null,
     error: null,
     loading: false,
+    addLoading: false,
   };
 
   const [state, dispatch] = useReducer(contactReducer, initialState);
@@ -59,11 +63,10 @@ const ContactState = (props) => {
         dispatch({
           type: GET_CONTACTS_SUCCESS,
           payload: data,
-          loading: false,
         });
-      }, 1500);
+      }, 1000);
     } catch (error) {
-      dispatch({ type: GET_CONTACTS_FAIL, loading: false });
+      dispatch({ type: GET_CONTACTS_FAIL });
     }
   };
 
@@ -75,6 +78,21 @@ const ContactState = (props) => {
     dispatch({ type: CLEAR_FILTER });
   };
 
+  const addContact = (contact) => {
+    contact.id = uuidv4();
+    dispatch({ type: ADD_CONTACT_REQUEST });
+    try {
+      setTimeout(() => {
+        dispatch({
+          type: ADD_CONTACT_SUCCESS,
+          payload: contact,
+        });
+      }, 1000);
+    } catch (error) {
+      dispatch({ type: ADD_CONTACT_FAIL });
+    }
+  };
+
   return (
     <ContactContext.Provider
       value={{
@@ -82,9 +100,11 @@ const ContactState = (props) => {
         filtered: state.filtered,
         error: state.error,
         loading: state.loading,
+        addLoading: state.addLoading,
         getContacts,
         filterContacts,
         clearFilter,
+        addContact,
       }}
     >
       {props.children}

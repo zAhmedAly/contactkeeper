@@ -4,7 +4,10 @@ import {
   GET_CONTACTS_FAIL,
   FILTER_CONTACTS,
   CLEAR_FILTER,
-} from "../types";
+  ADD_CONTACT_SUCCESS,
+  ADD_CONTACT_FAIL,
+  ADD_CONTACT_REQUEST,
+} from '../types';
 
 export default (state, action) => {
   const { type, payload } = action;
@@ -34,6 +37,20 @@ export default (state, action) => {
       return {
         ...state,
         filtered: null,
+      };
+    case ADD_CONTACT_REQUEST:
+      return { ...state, addLoading: true };
+    case ADD_CONTACT_SUCCESS:
+      return {
+        ...state,
+        contacts: [payload, ...state.contacts],
+        addLoading: false,
+      };
+    case ADD_CONTACT_FAIL:
+      return {
+        ...state,
+        error: payload,
+        addLoading: false,
       };
     default:
       return state;
