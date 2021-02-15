@@ -1,17 +1,17 @@
 $theme-colors: (
-  "primary": #003699,
-  "light": #f4f4f4,
-  "dark": #333333,
-  "danger": #dc3545,
-  "success": #28a745,
-  "info": lightblue,
+  'primary': #003699,
+  'light': #f4f4f4,
+  'dark': #333333,
+  'danger': #dc3545,
+  'success': #28a745,
+  'info': lightblue,
 );
 
 // $border-radius: 10rem;
 
 $color: white;
 
-@import "bootstrap/scss/bootstrap";
+@import 'bootstrap/scss/bootstrap';
 
 main {
   min-height: 80vh;
