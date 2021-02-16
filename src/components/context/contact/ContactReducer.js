@@ -7,7 +7,10 @@ import {
   ADD_CONTACT_SUCCESS,
   ADD_CONTACT_FAIL,
   ADD_CONTACT_REQUEST,
-} from '../types';
+  DELETE_CONTACT_SUCCESS,
+  DELETE_CONTACT_FAIL,
+  DELETE_CONTACT_REQUEST,
+} from "../types";
 
 export default (state, action) => {
   const { type, payload } = action;
@@ -51,6 +54,20 @@ export default (state, action) => {
         ...state,
         error: payload,
         addLoading: false,
+      };
+    case DELETE_CONTACT_REQUEST:
+      return { ...state, deleteLoading: true };
+    case DELETE_CONTACT_SUCCESS:
+      return {
+        ...state,
+        contacts: state.contacts.filter((contact) => payload !== contact.id),
+        deleteLoading: false,
+      };
+    case DELETE_CONTACT_FAIL:
+      return {
+        ...state,
+        error: payload,
+        deleteLoading: false,
       };
     default:
       return state;
