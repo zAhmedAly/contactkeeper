@@ -10,7 +10,7 @@ const HomeScreen = () => {
         <AddEditContact />
       </Col>
       <Col />
-      <Col md={6}>
+      <Col md={5}>
         <Contacts />
       </Col>
     </Row>
