@@ -90,7 +90,7 @@ const ContactState = (props) => {
           type: ADD_CONTACT_SUCCESS,
           payload: contact,
         });
-      }, 1000);
+      }, 500);
     } catch (error) {
       dispatch({ type: ADD_CONTACT_FAIL });
     }
@@ -104,7 +104,7 @@ const ContactState = (props) => {
           type: DELETE_CONTACT_SUCCESS,
           payload: id,
         });
-      }, 1000);
+      }, 500);
     } catch (error) {
       dispatch({ type: DELETE_CONTACT_FAIL });
     }

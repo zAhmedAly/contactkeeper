@@ -7,7 +7,13 @@ import SearchContacts from "./SearchContacts";
 const Contacts = () => {
   const contactContext = useContext(ContactContext);
 
-  const { contacts, filtered, getContacts, loading } = contactContext;
+  const {
+    contacts,
+    filtered,
+    getContacts,
+    loading,
+    deleteLoading,
+  } = contactContext;
 
   useEffect(() => {
     getContacts();
@@ -51,7 +57,32 @@ const Contacts = () => {
 
       <SearchContacts />
 
-      {!loading ? (
+      {!loading &&
+        (contacts !== null && contacts.length > 0 ? (
+          filtered !== null ? (
+            filtered.map((contact) => (
+              <ContactItem key={contact.id} contact={contact} />
+            ))
+          ) : (
+            contacts.map((contact) => (
+              <ContactItem key={contact.id} contact={contact} />
+            ))
+          )
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignitems: "center",
+              marginTop: "10%",
+            }}
+          >
+            {" "}
+            <span>No Contacts, Please add a contact</span>
+          </div>
+        ))}
+
+      {/* {!loading ? (
         contacts !== null && contacts.length > 0 ? (
           filtered !== null ? (
             filtered.map((contact) => (
@@ -76,20 +107,22 @@ const Contacts = () => {
           </div>
         )
       ) : (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignitems: "center",
-            height: "100%",
-            marginTop: "25%",
-          }}
-        >
-          <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-        </div>
-      )}
+        <div id="cover-spin"></div>
+
+        // <div
+        //   style={{
+        //     display: "flex",
+        //     justifyContent: "center",
+        //     alignitems: "center",
+        //     height: "100%",
+        //     marginTop: "25%",
+        //   }}
+        // >
+        //   <Spinner animation="border" role="status">
+        //     <span className="sr-only">Loading...</span>
+        //   </Spinner>
+        // </div>
+      )} */}
     </>
   );
 };

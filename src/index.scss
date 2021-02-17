@@ -1,19 +1,67 @@
 $theme-colors: (
-  'primary': #003699,
-  'light': #f4f4f4,
-  'dark': #333333,
-  'danger': #dc3545,
-  'success': #28a745,
-  'info': lightblue,
+  "primary": #003699,
+  "light": #f4f4f4,
+  "dark": #333333,
+  "danger": #dc3545,
+  "success": #28a745,
+  "info": lightblue,
 );
 
 // $border-radius: 10rem;
 
 $color: white;
 
-@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/bootstrap";
 
 main {
   min-height: 80vh;
   margin: 50px auto;
+}
+
+#cover-spin {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(88, 86, 86, 0.212);
+  z-index: 9999;
+  // display: none;
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#cover-spin::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 48%;
+  top: 40%;
+  width: 100px;
+  height: 100px;
+  // transform: translate(-50px, -50px);
+  border-style: solid;
+  border-color: black;
+  border-top-color: transparent;
+  border-width: 6px;
+  border-radius: 50%;
+  -webkit-animation: spin 0.8s linear infinite;
+  animation: spin 0.8s linear infinite;
 }
