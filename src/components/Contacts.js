@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Badge, Spinner } from "react-bootstrap";
+import { Badge } from "react-bootstrap";
 import ContactItem from "./ContactItem";
 import ContactContext from "./context/contact/ContactContext";
 import SearchContacts from "./SearchContacts";
@@ -7,16 +7,11 @@ import SearchContacts from "./SearchContacts";
 const Contacts = () => {
   const contactContext = useContext(ContactContext);
 
-  const {
-    contacts,
-    filtered,
-    getContacts,
-    loading,
-    deleteLoading,
-  } = contactContext;
+  const { contacts, filtered, getContacts, loading } = contactContext;
 
   useEffect(() => {
     getContacts();
+    // eslint-disable-next-line
   }, []);
 
   return (

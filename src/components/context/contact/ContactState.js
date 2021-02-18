@@ -15,6 +15,8 @@ import {
   DELETE_CONTACT_SUCCESS,
   DELETE_CONTACT_FAIL,
   DELETE_CONTACT_REQUEST,
+  SET_CURRENT,
+  CLEAR_CURRENT,
 } from "../types";
 
 const ContactState = (props) => {
@@ -52,9 +54,11 @@ const ContactState = (props) => {
   const initialState = {
     contacts: data,
     filtered: null,
+    current: null,
     error: null,
     loading: false,
     addLoading: false,
+    deleteLoading: false,
   };
 
   const [state, dispatch] = useReducer(contactReducer, initialState);
@@ -90,7 +94,7 @@ const ContactState = (props) => {
           type: ADD_CONTACT_SUCCESS,
           payload: contact,
         });
-      }, 500);
+      }, 1000);
     } catch (error) {
       dispatch({ type: ADD_CONTACT_FAIL });
     }
@@ -104,10 +108,18 @@ const ContactState = (props) => {
           type: DELETE_CONTACT_SUCCESS,
           payload: id,
         });
-      }, 500);
+      }, 1000);
     } catch (error) {
       dispatch({ type: DELETE_CONTACT_FAIL });
     }
+  };
+
+  const setCurrent = (contact) => {
+    dispatch({ type: SET_CURRENT, payload: contact });
+  };
+
+  const clearCurrent = (contact) => {
+    dispatch({ type: CLEAR_CURRENT });
   };
 
   return (
@@ -115,6 +127,7 @@ const ContactState = (props) => {
       value={{
         contacts: state.contacts,
         filtered: state.filtered,
+        current: state.current,
         error: state.error,
         loading: state.loading,
         addLoading: state.addLoading,
@@ -124,6 +137,8 @@ const ContactState = (props) => {
         clearFilter,
         addContact,
         deleteContact,
+        setCurrent,
+        clearCurrent,
       }}
     >
       {props.children}

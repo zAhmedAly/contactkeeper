@@ -1,13 +1,23 @@
 import React, { useContext } from "react";
-import { Badge, Button, Card, Spinner } from "react-bootstrap";
+import { Badge, Button, Card } from "react-bootstrap";
 import { FaPhone, FaEnvelopeOpen, FaTrashAlt, FaEdit } from "react-icons/fa";
 import ContactContext from "./context/contact/ContactContext";
 
 const ContactItem = ({ contact }) => {
   const contactContext = useContext(ContactContext);
-  const { deleteContact, deleteLoading } = contactContext;
+  const {
+    deleteContact,
+    deleteLoading,
+    setCurrent,
+    clearCurrent,
+  } = contactContext;
 
   const { id, name, email, phone, type } = contact;
+
+  const onDelete = () => {
+    deleteContact(id);
+    clearCurrent();
+  };
 
   return (
     <Card
@@ -65,7 +75,7 @@ const ContactItem = ({ contact }) => {
             alignItems: "center",
             margin: "0 0.2rem",
           }}
-          // onClick={() => setContactForEdit(contact)}
+          onClick={() => setCurrent(contact)}
         >
           <FaEdit
             style={{
@@ -85,9 +95,7 @@ const ContactItem = ({ contact }) => {
             margin: "0 0.2rem",
           }}
           disabled={deleteLoading}
-          onClick={() => {
-            deleteContact(id);
-          }}
+          onClick={onDelete}
         >
           <FaTrashAlt
             style={{

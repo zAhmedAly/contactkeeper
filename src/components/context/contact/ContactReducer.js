@@ -10,7 +10,9 @@ import {
   DELETE_CONTACT_SUCCESS,
   DELETE_CONTACT_FAIL,
   DELETE_CONTACT_REQUEST,
-} from '../types';
+  SET_CURRENT,
+  CLEAR_CURRENT,
+} from "../types";
 
 export default (state, action) => {
   const { type, payload } = action;
@@ -72,6 +74,16 @@ export default (state, action) => {
         ...state,
         error: payload,
         deleteLoading: false,
+      };
+    case SET_CURRENT:
+      return {
+        ...state,
+        current: payload,
+      };
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null,
       };
     default:
       return state;

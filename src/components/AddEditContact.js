@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Button, Card, Form, Spinner } from "react-bootstrap";
+import React, { useState, useContext, useEffect } from "react";
+import { Button, Card, Form } from "react-bootstrap";
 import ContactContext from "./context/contact/ContactContext";
 
 const AddEditContact = () => {
@@ -15,16 +15,30 @@ const AddEditContact = () => {
 
   const contactContext = useContext(ContactContext);
 
-  const { addLoading, addContact } = contactContext;
+  const { addLoading, addContact, current, clearCurrent } = contactContext;
 
   const onChange = (e) => {
     setContact({ ...contact, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    if (current !== null) {
+      setContact(current);
+    } else {
+      setContact({
+        name: "",
+        email: "",
+        phone: "",
+        type: "personal",
+      });
+    }
+  }, [current]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     addContact(contact);
     clearForm();
+    clearCurrent();
   };
 
   const clearForm = () => {
@@ -35,12 +49,17 @@ const AddEditContact = () => {
       phone: "",
       type: "personal",
     });
+    clearCurrent();
   };
 
   return (
     <>
       <h2 className="my-2" style={{ color: "darkblue", textAlign: "center" }}>
-        <strong>Add Contact</strong>
+        {current ? (
+          <strong>Update Contact</strong>
+        ) : (
+          <strong>Add Contact</strong>
+        )}
       </h2>
       <Card className="mb-3">
         <Card.Body>
@@ -118,16 +137,19 @@ const AddEditContact = () => {
                   />{" "} */}
                   Saving ...
                 </>
+              ) : current ? (
+                "Update Contact"
               ) : (
                 "Add Contact"
               )}
               {/* {addLoading && <div id="cover-spin"></div>}
               Add Contact */}
             </Button>
-
-            <Button variant="light" className="btn-block" onClick={clearForm}>
-              Clear
-            </Button>
+            {current && (
+              <Button variant="light" className="btn-block" onClick={clearForm}>
+                Clear
+              </Button>
+            )}
           </Form>
         </Card.Body>
       </Card>
