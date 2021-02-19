@@ -10,6 +10,9 @@ import {
   DELETE_CONTACT_SUCCESS,
   DELETE_CONTACT_FAIL,
   DELETE_CONTACT_REQUEST,
+  UPDATE_CONTACT_REQUEST,
+  UPDATE_CONTACT_SUCCESS,
+  UPDATE_CONTACT_FAIL,
   SET_CURRENT,
   CLEAR_CURRENT,
 } from "../types";
@@ -49,6 +52,7 @@ export default (state, action) => {
       return {
         ...state,
         contacts: [payload, ...state.contacts],
+        filtered: state.filtered !== null ? [payload, ...state.filtered] : null,
         addLoading: false,
       };
     case ADD_CONTACT_FAIL:
@@ -74,6 +78,28 @@ export default (state, action) => {
         ...state,
         error: payload,
         deleteLoading: false,
+      };
+    case UPDATE_CONTACT_REQUEST:
+      return { ...state, addLoading: true };
+    case UPDATE_CONTACT_SUCCESS:
+      return {
+        ...state,
+        contacts: state.contacts.map((contact) =>
+          contact.id === payload.id ? payload : contact
+        ),
+        filtered:
+          state.filtered !== null
+            ? state.filtered.map((contact) =>
+                contact.id === payload.id ? payload : contact
+              )
+            : null,
+        addLoading: false,
+      };
+    case UPDATE_CONTACT_FAIL:
+      return {
+        ...state,
+        error: payload,
+        addLoading: false,
       };
     case SET_CURRENT:
       return {

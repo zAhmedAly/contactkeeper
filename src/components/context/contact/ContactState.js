@@ -15,6 +15,9 @@ import {
   DELETE_CONTACT_SUCCESS,
   DELETE_CONTACT_FAIL,
   DELETE_CONTACT_REQUEST,
+  UPDATE_CONTACT_REQUEST,
+  UPDATE_CONTACT_SUCCESS,
+  UPDATE_CONTACT_FAIL,
   SET_CURRENT,
   CLEAR_CURRENT,
 } from "../types";
@@ -114,6 +117,20 @@ const ContactState = (props) => {
     }
   };
 
+  const updateContact = (contact) => {
+    dispatch({ type: UPDATE_CONTACT_REQUEST });
+    try {
+      setTimeout(() => {
+        dispatch({
+          type: UPDATE_CONTACT_SUCCESS,
+          payload: contact,
+        });
+      }, 1000);
+    } catch (error) {
+      dispatch({ type: UPDATE_CONTACT_FAIL });
+    }
+  };
+
   const setCurrent = (contact) => {
     dispatch({ type: SET_CURRENT, payload: contact });
   };
@@ -137,6 +154,7 @@ const ContactState = (props) => {
         clearFilter,
         addContact,
         deleteContact,
+        updateContact,
         setCurrent,
         clearCurrent,
       }}

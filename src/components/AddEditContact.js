@@ -15,7 +15,13 @@ const AddEditContact = () => {
 
   const contactContext = useContext(ContactContext);
 
-  const { addLoading, addContact, current, clearCurrent } = contactContext;
+  const {
+    addLoading,
+    addContact,
+    updateContact,
+    current,
+    clearCurrent,
+  } = contactContext;
 
   const onChange = (e) => {
     setContact({ ...contact, [e.target.name]: e.target.value });
@@ -36,7 +42,11 @@ const AddEditContact = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addContact(contact);
+    if (current === null) {
+      addContact(contact);
+    } else {
+      updateContact(contact);
+    }
     clearForm();
     clearCurrent();
   };
