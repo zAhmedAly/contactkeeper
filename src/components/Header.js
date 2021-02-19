@@ -1,29 +1,29 @@
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Nav, Navbar } from "react-bootstrap";
 import {
   FaUserPlus,
   FaAddressBook,
   FaSignInAlt,
   FaSignOutAlt,
   FaHome,
-} from 'react-icons/fa';
-import { LinkContainer } from 'react-router-bootstrap';
+} from "react-icons/fa";
+import { LinkContainer } from "react-router-bootstrap";
 
 const Header = () => {
   return (
     <Navbar
       collapseOnSelect
-      expand='lg'
-      bg='primary'
-      fixed='top'
-      defaultExpanded='false'
+      expand="lg"
+      bg="primary"
+      fixed="top"
+      defaultExpanded="false"
     >
       <Container>
         <LinkContainer
-          to='/'
+          to="/"
           style={{
-            color: 'white',
-            display: 'flex',
-            alignItems: 'center',
+            color: "white",
+            display: "flex",
+            alignItems: "center",
           }}
         >
           <Navbar.Brand>
@@ -31,28 +31,28 @@ const Header = () => {
           </Navbar.Brand>
         </LinkContainer>
 
-        <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-        <Navbar.Collapse id='responsive-navbar-nav' style={{ color: 'white' }}>
-          <Nav className='ml-auto'>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav" style={{ color: "white" }}>
+          <Nav className="ml-auto">
             <LinkContainer
-              to='/'
-              style={{ color: 'white', display: 'flex', alignItems: 'center' }}
+              to="/"
+              style={{ color: "white", display: "flex", alignItems: "center" }}
             >
               <Nav.Link>
                 <FaHome /> Home
               </Nav.Link>
             </LinkContainer>
 
-            <Nav.Link
-              style={{ color: 'white', display: 'flex', alignItems: 'center' }}
-              href='#about'
+            <LinkContainer
+              to="/about"
+              style={{ color: "white", display: "flex", alignItems: "center" }}
             >
-              About
-            </Nav.Link>
+              <Nav.Link>About</Nav.Link>
+            </LinkContainer>
 
             <LinkContainer
-              to='/login'
-              style={{ color: 'white', display: 'flex', alignItems: 'center' }}
+              to="/login"
+              style={{ color: "white", display: "flex", alignItems: "center" }}
             >
               <Nav.Link>
                 <FaSignInAlt /> Login
@@ -60,15 +60,15 @@ const Header = () => {
             </LinkContainer>
 
             <Nav.Link
-              style={{ color: 'white', display: 'flex', alignItems: 'center' }}
-              href='#register'
+              style={{ color: "white", display: "flex", alignItems: "center" }}
+              href="#register"
             >
               <FaUserPlus /> Register
             </Nav.Link>
 
             <Nav.Link
-              style={{ color: 'white', display: 'flex', alignItems: 'center' }}
-              href='#logout'
+              style={{ color: "white", display: "flex", alignItems: "center" }}
+              href="#logout"
             >
               <FaSignOutAlt />
               Logout
