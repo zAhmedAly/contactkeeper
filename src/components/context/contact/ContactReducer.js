@@ -18,27 +18,26 @@ import {
 } from "../types";
 
 export default (state, action) => {
-  const { type, payload } = action;
-  switch (type) {
+  switch (action.type) {
     case GET_CONTACTS_REQUEST:
       return { ...state, loading: true };
     case GET_CONTACTS_SUCCESS:
       return {
         ...state,
-        contacts: payload,
+        contacts: action.payload,
         loading: false,
       };
     case GET_CONTACTS_FAIL:
       return {
         ...state,
-        error: payload,
+        error: action.payload,
         loading: false,
       };
     case FILTER_CONTACTS:
       return {
         ...state,
         filtered: state.contacts.filter((contact) => {
-          return contact.name.toLowerCase().includes(payload);
+          return contact.name.toLowerCase().includes(action.payload);
         }),
       };
     case CLEAR_FILTER:
@@ -51,14 +50,15 @@ export default (state, action) => {
     case ADD_CONTACT_SUCCESS:
       return {
         ...state,
-        contacts: [payload, ...state.contacts],
-        filtered: state.filtered !== null ? [payload, ...state.filtered] : null,
+        contacts: [action.payload, ...state.contacts],
+        filtered:
+          state.filtered !== null ? [action.payload, ...state.filtered] : null,
         addLoading: false,
       };
     case ADD_CONTACT_FAIL:
       return {
         ...state,
-        error: payload,
+        error: action.payload,
         addLoading: false,
       };
     case DELETE_CONTACT_REQUEST:
@@ -66,17 +66,19 @@ export default (state, action) => {
     case DELETE_CONTACT_SUCCESS:
       return {
         ...state,
-        contacts: state.contacts.filter((contact) => payload !== contact.id),
+        contacts: state.contacts.filter(
+          (contact) => action.payload !== contact.id
+        ),
         filtered:
           state.filtered !== null
-            ? state.filtered.filter((contact) => payload !== contact.id)
+            ? state.filtered.filter((contact) => action.payload !== contact.id)
             : null,
         deleteLoading: false,
       };
     case DELETE_CONTACT_FAIL:
       return {
         ...state,
-        error: payload,
+        error: action.payload,
         deleteLoading: false,
       };
     case UPDATE_CONTACT_REQUEST:
@@ -85,12 +87,12 @@ export default (state, action) => {
       return {
         ...state,
         contacts: state.contacts.map((contact) =>
-          contact.id === payload.id ? payload : contact
+          contact.id === action.payload.id ? action.payload : contact
         ),
         filtered:
           state.filtered !== null
             ? state.filtered.map((contact) =>
-                contact.id === payload.id ? payload : contact
+                contact.id === action.payload.id ? action.payload : contact
               )
             : null,
         addLoading: false,
@@ -98,13 +100,13 @@ export default (state, action) => {
     case UPDATE_CONTACT_FAIL:
       return {
         ...state,
-        error: payload,
+        error: action.payload,
         addLoading: false,
       };
     case SET_CURRENT:
       return {
         ...state,
-        current: payload,
+        current: action.payload,
       };
     case CLEAR_CURRENT:
       return {
