@@ -59,12 +59,14 @@ const Header = () => {
               </Nav.Link>
             </LinkContainer>
 
-            <Nav.Link
+            <LinkContainer
+              to="/register"
               style={{ color: "white", display: "flex", alignItems: "center" }}
-              href="#register"
             >
-              <FaUserPlus /> Register
-            </Nav.Link>
+              <Nav.Link>
+                <FaUserPlus /> Register
+              </Nav.Link>
+            </LinkContainer>
 
             <Nav.Link
               style={{ color: "white", display: "flex", alignItems: "center" }}
