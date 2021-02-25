@@ -59,18 +59,19 @@ const AuthState = (props) => {
     dispatch({ type: LOGIN_REQUEST });
 
     try {
-      const userExists = usersData.filter(
+      const userExists = state.users.filter(
         (user) =>
           user.email.toLowerCase() === email.toLowerCase() &&
           user.password === password
       );
 
       setTimeout(() => {
-        if (userExists) {
+        if (userExists.length > 0) {
           dispatch({
             type: LOGIN_SUCCESS,
             payload: { email, password },
           });
+          setAlert("User Logged In Successfully", "success");
         } else {
           dispatch({ type: LOGIN_FAIL });
           setAlert("Invalid email or password", "danger");
@@ -85,10 +86,11 @@ const AuthState = (props) => {
     console.log("AuthState Register registerData = ", registerData);
 
     dispatch({ type: REGISTER_REQUEST });
-    try {
-      console.log("AuthState Register usersData = ", usersData);
 
-      const userExists = usersData.filter(
+    try {
+      console.log("AuthState Register users = ", state.users);
+
+      const userExists = state.users.filter(
         (user) => user.email.toLowerCase() === registerData.email.toLowerCase()
       );
       console.log("AuthState Register userExists = ", userExists);
