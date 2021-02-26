@@ -4,7 +4,7 @@ import Alerts from "../components/Alerts";
 import AlertContext from "../components/context/alert/AlertContext";
 import AuthContext from "../components/context/auth/AuthContext";
 
-const LoginScreen = () => {
+const LoginScreen = ({ history }) => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -13,7 +13,7 @@ const LoginScreen = () => {
   const { email, password } = loginData;
 
   const authContext = useContext(AuthContext);
-  const { loading, login } = authContext;
+  const { loading, login, isAuthenticated } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
@@ -22,10 +22,20 @@ const LoginScreen = () => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push("/");
+    }
+    // eslint-disable-next-line
+  }, [isAuthenticated, history]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     login({ email, password });
-    // clearForm();
+    if (isAuthenticated) {
+      clearForm();
+      history.push("/");
+    }
   };
 
   const clearForm = () => {

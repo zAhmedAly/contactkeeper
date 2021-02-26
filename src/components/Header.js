@@ -1,4 +1,7 @@
+import React, { useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
+import AuthContext from "./context/auth/AuthContext";
+
 import {
   FaUserPlus,
   FaAddressBook,
@@ -9,6 +12,8 @@ import {
 import { LinkContainer } from "react-router-bootstrap";
 
 const Header = () => {
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated } = authContext;
   return (
     <Navbar
       collapseOnSelect
@@ -34,14 +39,20 @@ const Header = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav" style={{ color: "white" }}>
           <Nav className="ml-auto">
-            <LinkContainer
-              to="/"
-              style={{ color: "white", display: "flex", alignItems: "center" }}
-            >
-              <Nav.Link>
-                <FaHome /> Home
-              </Nav.Link>
-            </LinkContainer>
+            {isAuthenticated && (
+              <LinkContainer
+                to="/"
+                style={{
+                  color: "white",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Nav.Link>
+                  <FaHome /> Home
+                </Nav.Link>
+              </LinkContainer>
+            )}
 
             <LinkContainer
               to="/about"
@@ -50,31 +61,48 @@ const Header = () => {
               <Nav.Link>About</Nav.Link>
             </LinkContainer>
 
-            <LinkContainer
-              to="/login"
-              style={{ color: "white", display: "flex", alignItems: "center" }}
-            >
-              <Nav.Link>
-                <FaSignInAlt /> Login
-              </Nav.Link>
-            </LinkContainer>
+            {!isAuthenticated && (
+              <>
+                <LinkContainer
+                  to="/login"
+                  style={{
+                    color: "white",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Nav.Link>
+                    <FaSignInAlt /> Login
+                  </Nav.Link>
+                </LinkContainer>
 
-            <LinkContainer
-              to="/register"
-              style={{ color: "white", display: "flex", alignItems: "center" }}
-            >
-              <Nav.Link>
-                <FaUserPlus /> Register
+                <LinkContainer
+                  to="/register"
+                  style={{
+                    color: "white",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Nav.Link>
+                    <FaUserPlus /> Register
+                  </Nav.Link>
+                </LinkContainer>
+              </>
+            )}
+            {isAuthenticated && (
+              <Nav.Link
+                style={{
+                  color: "white",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                href="#logout"
+              >
+                <FaSignOutAlt />
+                Logout
               </Nav.Link>
-            </LinkContainer>
-
-            <Nav.Link
-              style={{ color: "white", display: "flex", alignItems: "center" }}
-              href="#logout"
-            >
-              <FaSignOutAlt />
-              Logout
-            </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

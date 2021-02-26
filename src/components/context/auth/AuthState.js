@@ -47,6 +47,7 @@ const AuthState = (props) => {
     user: null,
     error: null,
     loading: false,
+    isAuthenticated: false,
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -56,6 +57,7 @@ const AuthState = (props) => {
   const { setAlert } = alertContext;
 
   const login = (email, password) => {
+    console.log("INSIDE LOGIN ACTION ...");
     dispatch({ type: LOGIN_REQUEST });
 
     try {
@@ -64,6 +66,8 @@ const AuthState = (props) => {
           user.email.toLowerCase() === email.toLowerCase() &&
           user.password === password
       );
+
+      console.log("INSIDE LOGIN ACTION userExists...", userExists);
 
       setTimeout(() => {
         if (userExists.length > 0) {
@@ -120,6 +124,7 @@ const AuthState = (props) => {
         user: state.user,
         error: state.error,
         loading: state.loading,
+        isAuthenticated: state.isAuthonticated,
         login,
         register,
       }}

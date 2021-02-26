@@ -4,7 +4,7 @@ import Alerts from "../components/Alerts";
 import AlertContext from "../components/context/alert/AlertContext";
 import AuthContext from "../components/context/auth/AuthContext";
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ history }) => {
   const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
@@ -15,7 +15,7 @@ const RegisterScreen = () => {
   const { name, email, password, cpassword } = registerData;
 
   const authContext = useContext(AuthContext);
-  const { loading, register } = authContext;
+  const { loading, register, isAuthenticated } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
@@ -24,13 +24,22 @@ const RegisterScreen = () => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push("/");
+    }
+  }, [isAuthenticated, history]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (password !== cpassword) {
       setAlert("Passwords don't match", "danger");
     } else {
       register({ name, email, password });
-      clearForm();
+      if (isAuthenticated) {
+        clearForm();
+        history.push("/");
+      }
     }
   };
 
