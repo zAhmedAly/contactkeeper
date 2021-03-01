@@ -15,6 +15,7 @@ import {
   UPDATE_CONTACT_FAIL,
   SET_CURRENT,
   CLEAR_CURRENT,
+  CLEAR_ERRORS,
 } from "../types";
 
 export default (state, action) => {
@@ -112,6 +113,11 @@ export default (state, action) => {
       return {
         ...state,
         current: null,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

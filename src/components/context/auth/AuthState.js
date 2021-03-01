@@ -1,17 +1,22 @@
 import { useReducer, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 import AuthContext from "./AuthContext";
 import authReducer from "./AuthReducer";
-import AlertContext from "../alert/AlertContext";
+import setAuthToken from "../../../utils/setAuthToken";
 
 import {
+  AUTH_ERROR,
+  CLEAR_ERRORS,
   LOGIN_FAIL,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOGOUT,
   REGISTER_FAIL,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
+  USER_LOADED,
 } from "../types";
 
 const AuthState = (props) => {
@@ -47,75 +52,81 @@ const AuthState = (props) => {
     user: null,
     error: null,
     loading: false,
-    isAuthenticated: false,
+    isAuthenticated: null,
+    token: localStorage.getItem("token"),
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  const alertContext = useContext(AlertContext);
+  // Load User
+  const loadUser = async () => {
+    setAuthToken(localStorage.token);
 
-  const { setAlert } = alertContext;
+    try {
+      const res = await axios.get("/api/auth");
 
-  const login = (email, password) => {
-    console.log("INSIDE LOGIN ACTION ...");
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
+
+  const login = async (loginData) => {
     dispatch({ type: LOGIN_REQUEST });
 
-    try {
-      const userExists = state.users.filter(
-        (user) =>
-          user.email.toLowerCase() === email.toLowerCase() &&
-          user.password === password
-      );
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-      console.log("INSIDE LOGIN ACTION userExists...", userExists);
+    try {
+      const res = await axios.post("/api/auth", loginData, config);
 
       setTimeout(() => {
-        if (userExists.length > 0) {
-          dispatch({
-            type: LOGIN_SUCCESS,
-            payload: { email, password },
-          });
-          setAlert("User Logged In Successfully", "success");
-        } else {
-          dispatch({ type: LOGIN_FAIL });
-          setAlert("Invalid email or password", "danger");
-        }
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: res.data,
+        });
+        loadUser();
       }, 1000);
     } catch (error) {
-      dispatch({ type: LOGIN_FAIL });
+      dispatch({ type: LOGIN_FAIL, payload: error.response.data.msg });
     }
   };
 
-  const register = (registerData) => {
-    console.log("AuthState Register registerData = ", registerData);
-
+  const register = async (registerData) => {
     dispatch({ type: REGISTER_REQUEST });
 
-    try {
-      console.log("AuthState Register users = ", state.users);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-      const userExists = state.users.filter(
-        (user) => user.email.toLowerCase() === registerData.email.toLowerCase()
-      );
-      console.log("AuthState Register userExists = ", userExists);
+    try {
+      const res = await axios.post("/api/users", registerData, config);
+
       setTimeout(() => {
-        if (userExists.length === 0) {
-          registerData.id = uuidv4();
-          console.log("AuthState Register SAVEregisterData = ", registerData);
-          dispatch({
-            type: REGISTER_SUCCESS,
-            payload: registerData,
-          });
-          setAlert("User Regiserted Successfully", "success");
-        } else {
-          dispatch({ type: REGISTER_FAIL });
-          setAlert("User already exists", "danger");
-        }
+        dispatch({
+          type: REGISTER_SUCCESS,
+          payload: res.data,
+        });
+        loadUser();
       }, 1000);
     } catch (error) {
-      dispatch({ type: REGISTER_FAIL });
+      dispatch({ type: REGISTER_FAIL, payload: error.response.data.msg });
     }
   };
+
+  // Logout
+  const logout = () => dispatch({ type: LOGOUT });
+
+  // Clear Errors
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
   return (
     <AuthContext.Provider
@@ -124,9 +135,12 @@ const AuthState = (props) => {
         user: state.user,
         error: state.error,
         loading: state.loading,
-        isAuthenticated: state.isAuthonticated,
+        isAuthenticated: state.isAuthenticated,
+        token: state.token,
         login,
         register,
+        logout,
+        clearErrors,
       }}
     >
       {props.children}

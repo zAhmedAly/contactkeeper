@@ -13,7 +13,7 @@ const LoginScreen = ({ history }) => {
   const { email, password } = loginData;
 
   const authContext = useContext(AuthContext);
-  const { loading, login, isAuthenticated } = authContext;
+  const { loading, login, isAuthenticated, error, clearErrors } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
@@ -26,15 +26,24 @@ const LoginScreen = ({ history }) => {
     if (isAuthenticated) {
       history.push("/");
     }
+
+    if (error === "Invalid Credentials") {
+      setAlert(error, "danger");
+      clearErrors();
+    }
+
     // eslint-disable-next-line
-  }, [isAuthenticated, history]);
+  }, [error, isAuthenticated, history]);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    login({ email, password });
-    if (isAuthenticated) {
-      clearForm();
-      history.push("/");
+    if (email === "" || password === "") {
+      setAlert("Please fill in all fields", "danger");
+    } else {
+      login({
+        email,
+        password,
+      });
     }
   };
 

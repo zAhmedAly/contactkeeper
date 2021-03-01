@@ -1,9 +1,9 @@
 import { useReducer, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 import ContactContext from "./ContactContext";
 import contactReducer from "./ContactReducer";
-import AlertContext from "../alert/AlertContext";
 
 import {
   GET_CONTACTS_REQUEST,
@@ -68,13 +68,11 @@ const ContactState = (props) => {
 
   const [state, dispatch] = useReducer(contactReducer, initialState);
 
-  const alertContext = useContext(AlertContext);
-
-  const { setAlert } = alertContext;
-
-  const getContacts = () => {
+  const getContacts = async () => {
     dispatch({ type: GET_CONTACTS_REQUEST });
     try {
+      const res = await axios.get("/api/contacts");
+      console.log("getContacts res = ", res);
       setTimeout(() => {
         dispatch({
           type: GET_CONTACTS_SUCCESS,
@@ -103,7 +101,6 @@ const ContactState = (props) => {
           type: ADD_CONTACT_SUCCESS,
           payload: contact,
         });
-        setAlert("Contact Created", "success");
       }, 1000);
     } catch (error) {
       dispatch({ type: ADD_CONTACT_FAIL });
@@ -118,7 +115,6 @@ const ContactState = (props) => {
           type: DELETE_CONTACT_SUCCESS,
           payload: id,
         });
-        setAlert("Contact Deleted", "success");
       }, 1000);
     } catch (error) {
       dispatch({ type: DELETE_CONTACT_FAIL });
@@ -133,7 +129,6 @@ const ContactState = (props) => {
           type: UPDATE_CONTACT_SUCCESS,
           payload: contact,
         });
-        setAlert("Contact Updated", "success");
       }, 1000);
     } catch (error) {
       dispatch({ type: UPDATE_CONTACT_FAIL });

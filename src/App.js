@@ -9,19 +9,20 @@ import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import AuthState from "./components/context/auth/AuthState";
+import PrivateRoute from "./components/routing/PrivateRoute";
 
 const App = () => {
   return (
-    <AlertState>
-      <AuthState>
-        <ContactState>
+    <AuthState>
+      <ContactState>
+        <AlertState>
           <Router>
             <Header />
 
             <main className="py-4">
               <Container>
                 <Switch>
-                  <Route path="/" component={HomeScreen} exact />
+                  <PrivateRoute path="/" component={HomeScreen} exact />
                   <Route path="/login" component={LoginScreen} />
                   <Route path="/register" component={RegisterScreen} />
 
@@ -30,9 +31,9 @@ const App = () => {
               </Container>
             </main>
           </Router>
-        </ContactState>
-      </AuthState>
-    </AlertState>
+        </AlertState>
+      </ContactState>
+    </AuthState>
   );
 };
 

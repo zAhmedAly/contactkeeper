@@ -15,7 +15,13 @@ const RegisterScreen = ({ history }) => {
   const { name, email, password, cpassword } = registerData;
 
   const authContext = useContext(AuthContext);
-  const { loading, register, isAuthenticated } = authContext;
+  const {
+    loading,
+    register,
+    isAuthenticated,
+    error,
+    clearErrors,
+  } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
@@ -28,18 +34,24 @@ const RegisterScreen = ({ history }) => {
     if (isAuthenticated) {
       history.push("/");
     }
-  }, [isAuthenticated, history]);
+    if (error === "User already exists") {
+      setAlert(error, "danger");
+      clearErrors();
+    }
+  }, [error, isAuthenticated, history]);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (password !== cpassword) {
-      setAlert("Passwords don't match", "danger");
+    if (name === "" || email === "" || password === "") {
+      setAlert("Please enter all fields", "danger");
+    } else if (password !== cpassword) {
+      setAlert("Passwords do not match", "danger");
     } else {
-      register({ name, email, password });
-      if (isAuthenticated) {
-        clearForm();
-        history.push("/");
-      }
+      register({
+        name,
+        email,
+        password,
+      });
     }
   };
 
