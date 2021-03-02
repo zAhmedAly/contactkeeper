@@ -1,10 +1,10 @@
 import { useReducer, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
 import AuthContext from "./AuthContext";
 import authReducer from "./AuthReducer";
 import setAuthToken from "../../../utils/setAuthToken";
+import AlertContext from "../../context/alert/AlertContext";
 
 import {
   AUTH_ERROR,
@@ -20,35 +20,7 @@ import {
 } from "../types";
 
 const AuthState = (props) => {
-  const usersData = [
-    {
-      id: uuidv4(),
-      name: "Ahmed Aly",
-      email: "ahmed@gmail.com",
-      password: "123456",
-    },
-    {
-      id: uuidv4(),
-      name: "Edward Yue",
-      email: "edward@gmail.com",
-      password: "123456",
-    },
-    {
-      id: uuidv4(),
-      name: "Reham Kassem",
-      email: "reham@gmail.com",
-      password: "123456",
-    },
-    {
-      id: uuidv4(),
-      name: "Habiba Aly",
-      email: "habiba@gmail.com",
-      password: "123456",
-    },
-  ];
-
   const initialState = {
-    users: usersData,
     user: null,
     error: null,
     loading: false,
@@ -57,6 +29,9 @@ const AuthState = (props) => {
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
+
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
 
   // Load User
   const loadUser = async () => {
@@ -69,8 +44,9 @@ const AuthState = (props) => {
         type: USER_LOADED,
         payload: res.data,
       });
-    } catch (err) {
-      dispatch({ type: AUTH_ERROR });
+    } catch (error) {
+      dispatch({ type: AUTH_ERROR, payload: error.response.data.msg });
+      setAlert(error.response.data.msg, "danger");
     }
   };
 
@@ -95,6 +71,7 @@ const AuthState = (props) => {
       }, 1000);
     } catch (error) {
       dispatch({ type: LOGIN_FAIL, payload: error.response.data.msg });
+      setAlert(error.response.data.msg, "danger");
     }
   };
 
@@ -119,6 +96,7 @@ const AuthState = (props) => {
       }, 1000);
     } catch (error) {
       dispatch({ type: REGISTER_FAIL, payload: error.response.data.msg });
+      setAlert(error.response.data.msg, "danger");
     }
   };
 
@@ -131,12 +109,12 @@ const AuthState = (props) => {
   return (
     <AuthContext.Provider
       value={{
-        users: state.users,
         user: state.user,
         error: state.error,
         loading: state.loading,
         isAuthenticated: state.isAuthenticated,
         token: state.token,
+        loadUser,
         login,
         register,
         logout,

@@ -34,17 +34,15 @@ const RegisterScreen = ({ history }) => {
     if (isAuthenticated) {
       history.push("/");
     }
-    if (error === "User already exists") {
-      setAlert(error, "danger");
-      clearErrors();
-    }
-  }, [error, isAuthenticated, history]);
+    // if (error === "User already exists") {
+    //   setAlert(error, "danger");
+    //   clearErrors();
+    // }
+  }, [isAuthenticated, history]);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (name === "" || email === "" || password === "") {
-      setAlert("Please enter all fields", "danger");
-    } else if (password !== cpassword) {
+    if (password !== cpassword) {
       setAlert("Passwords do not match", "danger");
     } else {
       register({

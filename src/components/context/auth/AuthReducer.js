@@ -29,9 +29,9 @@ export default (state, action) => {
       localStorage.setItem("token", action.payload.token);
       return {
         ...state,
-        token: action.payload,
         loading: false,
         isAuthenticated: true,
+        token: action.payload.token,
       };
     case LOGIN_FAIL:
     case REGISTER_FAIL:
@@ -45,6 +45,7 @@ export default (state, action) => {
         loading: false,
         user: null,
         error: action.payload,
+        token: null,
       };
     case CLEAR_ERRORS:
       return {

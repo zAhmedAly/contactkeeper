@@ -4,6 +4,7 @@ import axios from "axios";
 
 import ContactContext from "./ContactContext";
 import contactReducer from "./ContactReducer";
+import AlertContext from "../../context/alert/AlertContext";
 
 import {
   GET_CONTACTS_REQUEST,
@@ -68,6 +69,9 @@ const ContactState = (props) => {
 
   const [state, dispatch] = useReducer(contactReducer, initialState);
 
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+
   const getContacts = async () => {
     dispatch({ type: GET_CONTACTS_REQUEST });
     try {
@@ -81,6 +85,7 @@ const ContactState = (props) => {
       }, 1000);
     } catch (error) {
       dispatch({ type: GET_CONTACTS_FAIL });
+      setAlert(error.response.data.msg, "danger");
     }
   };
 
@@ -101,9 +106,11 @@ const ContactState = (props) => {
           type: ADD_CONTACT_SUCCESS,
           payload: contact,
         });
+        setAlert("Contact Added", "success");
       }, 1000);
     } catch (error) {
       dispatch({ type: ADD_CONTACT_FAIL });
+      setAlert(error.response.data.msg, "danger");
     }
   };
 
@@ -115,9 +122,11 @@ const ContactState = (props) => {
           type: DELETE_CONTACT_SUCCESS,
           payload: id,
         });
+        setAlert("Contact Deleted", "success");
       }, 1000);
     } catch (error) {
       dispatch({ type: DELETE_CONTACT_FAIL });
+      setAlert(error.response.data.msg, "danger");
     }
   };
 
@@ -129,9 +138,11 @@ const ContactState = (props) => {
           type: UPDATE_CONTACT_SUCCESS,
           payload: contact,
         });
+        setAlert("Contact Updated", "success");
       }, 1000);
     } catch (error) {
       dispatch({ type: UPDATE_CONTACT_FAIL });
+      setAlert(error.response.data.msg, "danger");
     }
   };
 
