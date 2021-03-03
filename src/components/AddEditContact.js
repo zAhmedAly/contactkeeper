@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Button, Card, Form } from "react-bootstrap";
-import ContactContext from "./context/contact/ContactContext";
+import ContactContext from "../context/contact/ContactContext";
 
 const AddEditContact = () => {
   const [contact, setContact] = useState({

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Badge } from "react-bootstrap";
 import ContactItem from "./ContactItem";
-import ContactContext from "./context/contact/ContactContext";
+import ContactContext from "../context/contact/ContactContext";
 import SearchContacts from "./SearchContacts";
 import Alerts from "./Alerts";
 

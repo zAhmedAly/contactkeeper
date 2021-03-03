@@ -18,7 +18,7 @@ import {
   CLEAR_ERRORS,
 } from "../types";
 
-export default (state, action) => {
+const ContactReducer = (state, action) => {
   switch (action.type) {
     case GET_CONTACTS_REQUEST:
       return { ...state, loading: true };
@@ -123,3 +123,5 @@ export default (state, action) => {
       return state;
   }
 };
+
+export default ContactReducer;

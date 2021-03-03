@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import Alerts from "../components/Alerts";
-import AlertContext from "../components/context/alert/AlertContext";
-import AuthContext from "../components/context/auth/AuthContext";
+import AlertContext from "../context/alert/AlertContext";
+import AuthContext from "../context/auth/AuthContext";
 
 const RegisterScreen = ({ history }) => {
   const [registerData, setRegisterData] = useState({
@@ -15,13 +15,7 @@ const RegisterScreen = ({ history }) => {
   const { name, email, password, cpassword } = registerData;
 
   const authContext = useContext(AuthContext);
-  const {
-    loading,
-    register,
-    isAuthenticated,
-    error,
-    clearErrors,
-  } = authContext;
+  const { loading, register, isAuthenticated } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
@@ -34,10 +28,6 @@ const RegisterScreen = ({ history }) => {
     if (isAuthenticated) {
       history.push("/");
     }
-    // if (error === "User already exists") {
-    //   setAlert(error, "danger");
-    //   clearErrors();
-    // }
   }, [isAuthenticated, history]);
 
   const onSubmit = (e) => {
@@ -51,15 +41,6 @@ const RegisterScreen = ({ history }) => {
         password,
       });
     }
-  };
-
-  const clearForm = () => {
-    setRegisterData({
-      name: "",
-      email: "",
-      password: "",
-      cpassword: "",
-    });
   };
 
   return (

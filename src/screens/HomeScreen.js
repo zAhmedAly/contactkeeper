@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Col, Row } from "react-bootstrap";
 import AddEditContact from "../components/AddEditContact";
 import Contacts from "../components/Contacts";
-import ContactContext from "../components/context/contact/ContactContext";
+import ContactContext from "../context/contact/ContactContext";
 
 const HomeScreen = () => {
   const contactContext = useContext(ContactContext);

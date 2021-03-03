@@ -3,7 +3,7 @@ import axios from "axios";
 
 import AuthContext from "./AuthContext";
 import authReducer from "./AuthReducer";
-import setAuthToken from "../../../utils/setAuthToken";
+import setAuthToken from "../../utils/setAuthToken";
 import AlertContext from "../../context/alert/AlertContext";
 
 import {
@@ -21,11 +21,11 @@ import {
 
 const AuthState = (props) => {
   const initialState = {
+    token: localStorage.getItem("token"),
+    isAuthenticated: null,
+    loading: true,
     user: null,
     error: null,
-    loading: false,
-    isAuthenticated: null,
-    token: localStorage.getItem("token"),
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -47,6 +47,7 @@ const AuthState = (props) => {
     } catch (error) {
       dispatch({ type: AUTH_ERROR, payload: error.response.data.msg });
       setAlert(error.response.data.msg, "danger");
+      clearErrors();
     }
   };
 
@@ -72,6 +73,7 @@ const AuthState = (props) => {
     } catch (error) {
       dispatch({ type: LOGIN_FAIL, payload: error.response.data.msg });
       setAlert(error.response.data.msg, "danger");
+      clearErrors();
     }
   };
 
@@ -97,6 +99,7 @@ const AuthState = (props) => {
     } catch (error) {
       dispatch({ type: REGISTER_FAIL, payload: error.response.data.msg });
       setAlert(error.response.data.msg, "danger");
+      clearErrors();
     }
   };
 

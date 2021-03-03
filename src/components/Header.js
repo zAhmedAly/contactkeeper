@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import AuthContext from "./context/auth/AuthContext";
+import AuthContext from "../context/auth/AuthContext";
 
 import {
   FaUserPlus,

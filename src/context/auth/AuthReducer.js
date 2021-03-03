@@ -11,8 +11,7 @@ import {
   USER_LOADED,
 } from "../types";
 
-export default (state, action) => {
-  console.log("INSIDE Auth REDUCER ...");
+const AuthReducer = (state, action) => {
   switch (action.type) {
     case USER_LOADED:
       return {
@@ -21,9 +20,11 @@ export default (state, action) => {
         loading: false,
         user: action.payload,
       };
+
     case LOGIN_REQUEST:
     case REGISTER_REQUEST:
       return { ...state, loading: true };
+
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.payload.token);
@@ -33,6 +34,7 @@ export default (state, action) => {
         isAuthenticated: true,
         token: action.payload.token,
       };
+
     case LOGIN_FAIL:
     case REGISTER_FAIL:
     case AUTH_ERROR:
@@ -45,14 +47,17 @@ export default (state, action) => {
         loading: false,
         user: null,
         error: action.payload,
-        token: null,
       };
+
     case CLEAR_ERRORS:
       return {
         ...state,
         error: null,
       };
+
     default:
       return state;
   }
 };
+
+export default AuthReducer;

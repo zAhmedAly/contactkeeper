@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Alert } from "react-bootstrap";
-import AlertContext from "../components/context/alert/AlertContext";
+import AlertContext from "../context/alert/AlertContext";
 
 const Alerts = () => {
   const alertContext = useContext(AlertContext);

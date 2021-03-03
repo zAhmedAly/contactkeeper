@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Badge, Button, Card } from "react-bootstrap";
 import { FaPhone, FaEnvelopeOpen, FaTrashAlt, FaEdit } from "react-icons/fa";
-import ContactContext from "./context/contact/ContactContext";
+import ContactContext from "../context/contact/ContactContext";
 
 const ContactItem = ({ contact }) => {
   const contactContext = useContext(ContactContext);

@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import Alerts from "../components/Alerts";
-import AlertContext from "../components/context/alert/AlertContext";
-import AuthContext from "../components/context/auth/AuthContext";
+import AlertContext from "../context/alert/AlertContext";
+import AuthContext from "../context/auth/AuthContext";
 
 const LoginScreen = ({ history }) => {
   const [loginData, setLoginData] = useState({
@@ -13,7 +13,7 @@ const LoginScreen = ({ history }) => {
   const { email, password } = loginData;
 
   const authContext = useContext(AuthContext);
-  const { loading, login, isAuthenticated, error, clearErrors } = authContext;
+  const { loading, login, isAuthenticated } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
@@ -26,12 +26,6 @@ const LoginScreen = ({ history }) => {
     if (isAuthenticated) {
       history.push("/");
     }
-
-    // if (error === "Invalid Credentials") {
-    //   setAlert(error, "danger");
-    //   clearErrors();
-    // }
-
     // eslint-disable-next-line
   }, [isAuthenticated, history]);
 
@@ -45,13 +39,6 @@ const LoginScreen = ({ history }) => {
         password,
       });
     }
-  };
-
-  const clearForm = () => {
-    setLoginData({
-      email: "",
-      password: "",
-    });
   };
 
   return (
@@ -108,7 +95,6 @@ const LoginScreen = ({ history }) => {
         </Col>
         <Col></Col>
       </Row>
-      {/* <div style={{ width: "60%", margin: "auto" }}></div> */}
     </>
   );
 };

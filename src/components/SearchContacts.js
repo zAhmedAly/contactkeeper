@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useContext } from "react";
 import { Form } from "react-bootstrap";
-import ContactContext from "./context/contact/ContactContext";
+import ContactContext from "../context/contact/ContactContext";
 
 const SearchContacts = () => {
   const contactContext = useContext(ContactContext);
