@@ -23,7 +23,7 @@ const AuthState = (props) => {
   const initialState = {
     token: localStorage.getItem("token"),
     isAuthenticated: null,
-    loading: true,
+    loading: false,
     user: null,
     error: null,
   };
@@ -68,8 +68,8 @@ const AuthState = (props) => {
           type: LOGIN_SUCCESS,
           payload: res.data,
         });
-        loadUser();
       }, 1000);
+      loadUser();
     } catch (error) {
       dispatch({ type: LOGIN_FAIL, payload: error.response.data.msg });
       setAlert(error.response.data.msg, "danger");
@@ -94,8 +94,8 @@ const AuthState = (props) => {
           type: REGISTER_SUCCESS,
           payload: res.data,
         });
-        loadUser();
       }, 1000);
+      loadUser();
     } catch (error) {
       dispatch({ type: REGISTER_FAIL, payload: error.response.data.msg });
       setAlert(error.response.data.msg, "danger");
@@ -112,14 +112,14 @@ const AuthState = (props) => {
   return (
     <AuthContext.Provider
       value={{
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+        loading: state.loading,
         user: state.user,
         error: state.error,
-        loading: state.loading,
-        isAuthenticated: state.isAuthenticated,
-        token: state.token,
+        register,
         loadUser,
         login,
-        register,
         logout,
         clearErrors,
       }}

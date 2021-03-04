@@ -13,7 +13,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 const Header = () => {
   const authContext = useContext(AuthContext);
-  const { isAuthenticated } = authContext;
+  const { isAuthenticated, user } = authContext;
   return (
     <Navbar
       collapseOnSelect
@@ -22,13 +22,18 @@ const Header = () => {
       fixed="top"
       defaultExpanded="false"
     >
-      <Container>
+      <Container
+        style={{
+          color: "white",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <LinkContainer
           to="/"
           style={{
             color: "white",
-            display: "flex",
-            alignItems: "center",
           }}
         >
           <Navbar.Brand>
@@ -38,22 +43,18 @@ const Header = () => {
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav" style={{ color: "white" }}>
+          {user && (
+            <Navbar.Text
+              style={{
+                color: "white",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              Welcome {user.name}
+            </Navbar.Text>
+          )}
           <Nav className="ml-auto">
-            {isAuthenticated && (
-              <LinkContainer
-                to="/"
-                style={{
-                  color: "white",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Nav.Link>
-                  <FaHome /> Home
-                </Nav.Link>
-              </LinkContainer>
-            )}
-
             <LinkContainer
               to="/about"
               style={{ color: "white", display: "flex", alignItems: "center" }}
