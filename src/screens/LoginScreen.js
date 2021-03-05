@@ -6,16 +6,16 @@ import AuthContext from "../context/auth/AuthContext";
 
 const LoginScreen = ({ history }) => {
   const authContext = useContext(AuthContext);
-  const { loading, login, isAuthenticated } = authContext;
+  const { loading, login, isAuthenticated, user } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && user) {
       history.push("/");
     }
-  }, [isAuthenticated, history]);
+  }, [isAuthenticated, user, history]);
 
   const [loginData, setLoginData] = useState({
     email: "",

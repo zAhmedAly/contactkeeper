@@ -8,7 +8,7 @@ import Alerts from "./Alerts";
 const Contacts = () => {
   const contactContext = useContext(ContactContext);
 
-  const { contacts, filtered, getContacts, loading } = contactContext;
+  const { contacts, filtered, getContacts, contactsLoading } = contactContext;
 
   useEffect(() => {
     getContacts();
@@ -28,7 +28,7 @@ const Contacts = () => {
       >
         {" "}
         <strong> Your Contacts</strong>
-        {!loading && (
+        {!contactsLoading && (
           <Badge
             style={{
               float: "right",
@@ -55,7 +55,7 @@ const Contacts = () => {
 
       <Alerts />
 
-      {!loading &&
+      {!contactsLoading &&
         (contacts !== null && contacts.length > 0 ? (
           filtered !== null ? (
             filtered.map((contact) => (
@@ -80,7 +80,7 @@ const Contacts = () => {
           </div>
         ))}
 
-      {/* {!loading ? (
+      {/* {!contactsLoading ? (
         contacts !== null && contacts.length > 0 ? (
           filtered !== null ? (
             filtered.map((contact) => (

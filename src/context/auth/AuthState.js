@@ -22,7 +22,7 @@ import {
 const AuthState = (props) => {
   const initialState = {
     token: localStorage.getItem("token"),
-    isAuthenticated: null,
+    isAuthenticated: false,
     loading: false,
     user: null,
     error: null,
@@ -68,8 +68,8 @@ const AuthState = (props) => {
           type: LOGIN_SUCCESS,
           payload: res.data,
         });
+        loadUser();
       }, 1000);
-      loadUser();
     } catch (error) {
       dispatch({ type: LOGIN_FAIL, payload: error.response.data.msg });
       setAlert(error.response.data.msg, "danger");
@@ -94,8 +94,8 @@ const AuthState = (props) => {
           type: REGISTER_SUCCESS,
           payload: res.data,
         });
+        loadUser();
       }, 1000);
-      loadUser();
     } catch (error) {
       dispatch({ type: REGISTER_FAIL, payload: error.response.data.msg });
       setAlert(error.response.data.msg, "danger");

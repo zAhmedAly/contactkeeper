@@ -21,18 +21,18 @@ import {
 const ContactReducer = (state, action) => {
   switch (action.type) {
     case GET_CONTACTS_REQUEST:
-      return { ...state, loading: true };
+      return { ...state, contactsLoading: true };
     case GET_CONTACTS_SUCCESS:
       return {
         ...state,
         contacts: action.payload,
-        loading: false,
+        contactsLoading: false,
       };
     case GET_CONTACTS_FAIL:
       return {
         ...state,
         error: action.payload,
-        loading: false,
+        contactsLoading: false,
       };
     case FILTER_CONTACTS:
       return {

@@ -7,11 +7,13 @@ import ContactContext from "../context/contact/ContactContext";
 const HomeScreen = () => {
   const contactContext = useContext(ContactContext);
 
-  const { loading, addLoading, deleteLoading } = contactContext;
+  const { contactsLoading, addLoading, deleteLoading } = contactContext;
 
   return (
     <>
-      {(loading || addLoading || deleteLoading) && <div id="cover-spin"></div>}
+      {(contactsLoading || addLoading || deleteLoading) && (
+        <div id="cover-spin"></div>
+      )}
 
       <Row>
         <Col md={5}>

@@ -62,7 +62,7 @@ const ContactState = (props) => {
     filtered: null,
     current: null,
     error: null,
-    loading: false,
+    contactsLoading: false,
     addLoading: false,
     deleteLoading: false,
   };
@@ -161,7 +161,7 @@ const ContactState = (props) => {
         filtered: state.filtered,
         current: state.current,
         error: state.error,
-        loading: state.loading,
+        contactsLoading: state.contactsLoading,
         addLoading: state.addLoading,
         deleteLoading: state.deleteLoading,
         getContacts,
