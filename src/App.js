@@ -23,10 +23,12 @@ const App = () => {
               <main className="py-4">
                 <Container>
                   <Switch>
-                    <PrivateRoute exact path="/" component={HomeScreen} />
-                    <Route exact path="/login" component={LoginScreen} />
-                    <Route exact path="/register" component={RegisterScreen} />
-                    <Route exact path="/about" component={About} />
+                    <Route path="/login" component={LoginScreen} />
+                    <Route path="/register" component={RegisterScreen} />
+                    <Route path="/about" component={About} />
+                    <PrivateRoute exact path="/">
+                      <HomeScreen />
+                    </PrivateRoute>
                   </Switch>
                 </Container>
               </main>

@@ -4,18 +4,22 @@ import Alerts from "../components/Alerts";
 import AlertContext from "../context/alert/AlertContext";
 import AuthContext from "../context/auth/AuthContext";
 
-const LoginScreen = ({ history }) => {
+const LoginScreen = ({ history, location }) => {
   const authContext = useContext(AuthContext);
   const { loading, login, isAuthenticated, user } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
+  let { from } = location.state || { from: { pathname: "/" } };
+
+  console.log(">>> FROM = ", from);
+
   useEffect(() => {
-    if (isAuthenticated && user) {
-      history.push("/");
+    if (isAuthenticated) {
+      history.replace(from);
     }
-  }, [isAuthenticated, user, history]);
+  }, [isAuthenticated, location, history, from]);
 
   const [loginData, setLoginData] = useState({
     email: "",
