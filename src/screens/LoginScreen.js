@@ -6,20 +6,30 @@ import AuthContext from "../context/auth/AuthContext";
 
 const LoginScreen = ({ history, location }) => {
   const authContext = useContext(AuthContext);
-  const { loading, login, isAuthenticated, user } = authContext;
+  const { loading, login, isAuthenticated, error, clearErrors } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
-  let { from } = location.state || { from: { pathname: "/" } };
+  // let { from } = location.state || { from: { pathname: "/" } };
 
   console.log(">>> FROM = ", from);
 
+  console.log("LoginScreen error = ", error);
+
   useEffect(() => {
     if (isAuthenticated) {
-      history.replace(from);
+      history.push("/");
+
+      if (error === "Invalid Credential") {
+        console.log("LoginScreen useEffect error = ", error);
+
+        setAlert(error, "danger");
+        // clearErrors();
+      }
     }
-  }, [isAuthenticated, location, history, from]);
+    // eslint-disable-next-line
+  }, [isAuthenticated, history, error]);
 
   const [loginData, setLoginData] = useState({
     email: "",

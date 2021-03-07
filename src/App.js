@@ -11,17 +11,20 @@ import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import Alerts from "./components/Alerts";
 
 const App = () => {
   return (
-    <AlertState>
-      <AuthState>
-        <ContactState>
+    <AuthState>
+      <ContactState>
+        <AlertState>
           <Router>
             <>
               <Header />
               <main className="py-4">
                 <Container>
+                  <Alerts />
+
                   <Switch>
                     <Route path="/login" component={LoginScreen} />
                     <Route path="/register" component={RegisterScreen} />
@@ -30,13 +33,14 @@ const App = () => {
                       <HomeScreen />
                     </PrivateRoute>
                   </Switch>
+                  <Alerts />
                 </Container>
               </main>
             </>
           </Router>
-        </ContactState>
-      </AuthState>
-    </AlertState>
+        </AlertState>
+      </ContactState>
+    </AuthState>
   );
 };
 

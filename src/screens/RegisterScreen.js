@@ -15,7 +15,13 @@ const RegisterScreen = ({ history }) => {
   const { name, email, password, cpassword } = registerData;
 
   const authContext = useContext(AuthContext);
-  const { loading, register, isAuthenticated } = authContext;
+  const {
+    loading,
+    register,
+    isAuthenticated,
+    error,
+    clearErrors,
+  } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
@@ -28,7 +34,12 @@ const RegisterScreen = ({ history }) => {
     if (isAuthenticated) {
       history.push("/");
     }
-  }, [isAuthenticated, history]);
+
+    if (error) {
+      setAlert(error, "danger");
+      clearErrors();
+    }
+  }, [isAuthenticated, history, error]);
 
   const onSubmit = (e) => {
     e.preventDefault();
