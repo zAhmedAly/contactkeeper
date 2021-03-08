@@ -39,6 +39,7 @@ const RegisterScreen = ({ history }) => {
       setAlert(error, "danger");
       clearErrors();
     }
+    // eslint-disable-next-line
   }, [isAuthenticated, history, error]);
 
   const onSubmit = (e) => {

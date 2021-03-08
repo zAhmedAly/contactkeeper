@@ -11,22 +11,14 @@ const LoginScreen = ({ history, location }) => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
-  // let { from } = location.state || { from: { pathname: "/" } };
-
-  console.log(">>> FROM = ", from);
-
-  console.log("LoginScreen error = ", error);
-
   useEffect(() => {
     if (isAuthenticated) {
       history.push("/");
+    }
 
-      if (error === "Invalid Credential") {
-        console.log("LoginScreen useEffect error = ", error);
-
-        setAlert(error, "danger");
-        // clearErrors();
-      }
+    if (error) {
+      setAlert(error, "danger");
+      clearErrors();
     }
     // eslint-disable-next-line
   }, [isAuthenticated, history, error]);
@@ -98,7 +90,7 @@ const LoginScreen = ({ history, location }) => {
                   variant="primary"
                   type="submit"
                   className="btn-block"
-                  disabled={!email || !password}
+                  // disabled={!email || !password}
                 >
                   {loading ? "LoggingIn ..." : "User Login"}
                 </Button>

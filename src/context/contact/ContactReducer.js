@@ -68,11 +68,11 @@ const ContactReducer = (state, action) => {
       return {
         ...state,
         contacts: state.contacts.filter(
-          (contact) => action.payload !== contact.id
+          (contact) => action.payload !== contact._id
         ),
         filtered:
           state.filtered !== null
-            ? state.filtered.filter((contact) => action.payload !== contact.id)
+            ? state.filtered.filter((contact) => action.payload !== contact._id)
             : null,
         deleteLoading: false,
       };
@@ -88,12 +88,12 @@ const ContactReducer = (state, action) => {
       return {
         ...state,
         contacts: state.contacts.map((contact) =>
-          contact.id === action.payload.id ? action.payload : contact
+          contact._id === action.payload._id ? action.payload : contact
         ),
         filtered:
           state.filtered !== null
             ? state.filtered.map((contact) =>
-                contact.id === action.payload.id ? action.payload : contact
+                contact._id === action.payload._id ? action.payload : contact
               )
             : null,
         addLoading: false,

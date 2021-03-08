@@ -28,7 +28,7 @@ const Contacts = () => {
       >
         {" "}
         <strong> Your Contacts</strong>
-        {!contactsLoading && (
+        {/* {!contactsLoading && (
           <Badge
             style={{
               float: "right",
@@ -48,7 +48,7 @@ const Contacts = () => {
               ? `${filtered.length} Contacts`
               : `${contacts.length} Contacts`}
           </Badge>
-        )}
+        )} */}
       </h3>
 
       <SearchContacts />
@@ -56,14 +56,14 @@ const Contacts = () => {
       <Alerts />
 
       {!contactsLoading &&
-        (contacts !== null && contacts.length > 0 ? (
+        (contacts !== null ? (
           filtered !== null ? (
             filtered.map((contact) => (
-              <ContactItem key={contact.id} contact={contact} />
+              <ContactItem key={contact._id} contact={contact} />
             ))
           ) : (
             contacts.map((contact) => (
-              <ContactItem key={contact.id} contact={contact} />
+              <ContactItem key={contact._id} contact={contact} />
             ))
           )
         ) : (
@@ -84,11 +84,11 @@ const Contacts = () => {
         contacts !== null && contacts.length > 0 ? (
           filtered !== null ? (
             filtered.map((contact) => (
-              <ContactItem key={contact.id} contact={contact} />
+              <ContactItem key={contact._id} contact={contact} />
             ))
           ) : (
             contacts.map((contact) => (
-              <ContactItem key={contact.id} contact={contact} />
+              <ContactItem key={contact._id} contact={contact} />
             ))
           )
         ) : (

@@ -11,7 +11,6 @@ import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import PrivateRoute from "./components/routing/PrivateRoute";
-import Alerts from "./components/Alerts";
 
 const App = () => {
   return (
@@ -23,17 +22,12 @@ const App = () => {
               <Header />
               <main className="py-4">
                 <Container>
-                  <Alerts />
-
                   <Switch>
                     <Route path="/login" component={LoginScreen} />
                     <Route path="/register" component={RegisterScreen} />
                     <Route path="/about" component={About} />
-                    <PrivateRoute exact path="/">
-                      <HomeScreen />
-                    </PrivateRoute>
+                    <PrivateRoute exact path="/" component={HomeScreen} />
                   </Switch>
-                  <Alerts />
                 </Container>
               </main>
             </>

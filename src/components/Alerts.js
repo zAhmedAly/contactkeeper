@@ -6,16 +6,12 @@ const Alerts = () => {
   const alertContext = useContext(AlertContext);
   const { alerts } = alertContext;
 
-  console.log("Alerts = ", alerts);
   return (
     alerts.length > 0 &&
     alerts.map((alert) => (
       <Alert key={alert.id} variant={alert.type}>
         {alert.msg}
       </Alert>
-      // <div key={alert.id} className={`alert alert-${alert.type}`}>
-      //   <i className="fas fa-info-circle" /> {alert.msg}
-      // </div>
     ))
   );
 };

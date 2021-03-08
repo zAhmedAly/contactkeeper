@@ -1,10 +1,9 @@
-import { useReducer, useContext } from "react";
+import { useReducer } from "react";
 import axios from "axios";
 
 import AuthContext from "./AuthContext";
 import authReducer from "./AuthReducer";
 import setAuthToken from "../../utils/setAuthToken";
-// import AlertContext from "../../context/alert/AlertContext";
 
 import {
   AUTH_ERROR,
@@ -30,9 +29,6 @@ const AuthState = (props) => {
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // const alertContext = useContext(AlertContext);
-  // const { setAlert } = alertContext;
-
   // Load User
   const loadUser = async () => {
     setAuthToken(localStorage.token);
@@ -49,9 +45,7 @@ const AuthState = (props) => {
         error.response && error.response.data.msg
           ? error.response.data.msg
           : error.response.statusText;
-      console.log(message);
       dispatch({ type: AUTH_ERROR, payload: message });
-      // setAlert(message, "danger");
     }
   };
 
@@ -79,9 +73,7 @@ const AuthState = (props) => {
         error.response && error.response.data.msg
           ? error.response.data.msg
           : error.response.statusText;
-      console.log(message);
       dispatch({ type: LOGIN_FAIL, payload: message });
-      // setAlert(message, "danger");
     }
   };
 
@@ -109,9 +101,7 @@ const AuthState = (props) => {
         error.response && error.response.data.msg
           ? error.response.data.msg
           : error.response.statusText;
-      console.log(message);
       dispatch({ type: REGISTER_FAIL, payload: message });
-      // setAlert(message, "danger");
     }
   };
 

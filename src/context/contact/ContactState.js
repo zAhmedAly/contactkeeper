@@ -1,10 +1,9 @@
-import { useReducer, useContext } from "react";
+import { useReducer } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
 import ContactContext from "./ContactContext";
 import contactReducer from "./ContactReducer";
-// import AlertContext from "../../context/alert/AlertContext";
 
 import {
   GET_CONTACTS_REQUEST,
@@ -58,7 +57,7 @@ const ContactState = (props) => {
   ];
 
   const initialState = {
-    contacts: data,
+    contacts: null,
     filtered: null,
     current: null,
     error: null,
@@ -69,9 +68,6 @@ const ContactState = (props) => {
 
   const [state, dispatch] = useReducer(contactReducer, initialState);
 
-  // const alertContext = useContext(AlertContext);
-  // const { setAlert } = alertContext;
-
   const getContacts = async () => {
     dispatch({ type: GET_CONTACTS_REQUEST });
     try {
@@ -80,7 +76,7 @@ const ContactState = (props) => {
       setTimeout(() => {
         dispatch({
           type: GET_CONTACTS_SUCCESS,
-          payload: data,
+          payload: res.data,
         });
       }, 1000);
     } catch (error) {
@@ -89,7 +85,6 @@ const ContactState = (props) => {
           ? error.response.data.msg
           : error.response.statusText;
       dispatch({ type: GET_CONTACTS_FAIL, payload: message });
-      // setAlert(error.response.data.msg, "danger");
     }
   };
 
@@ -110,7 +105,6 @@ const ContactState = (props) => {
           type: ADD_CONTACT_SUCCESS,
           payload: contact,
         });
-        // setAlert("Contact Added", "success");
       }, 1000);
     } catch (error) {
       const message =
@@ -118,7 +112,6 @@ const ContactState = (props) => {
           ? error.response.data.msg
           : error.response.statusText;
       dispatch({ type: ADD_CONTACT_FAIL, payload: message });
-      // setAlert(error.response.data.msg, "danger");
     }
   };
 
@@ -130,7 +123,6 @@ const ContactState = (props) => {
           type: DELETE_CONTACT_SUCCESS,
           payload: id,
         });
-        // setAlert("Contact Deleted", "success");
       }, 1000);
     } catch (error) {
       const message =
@@ -138,7 +130,6 @@ const ContactState = (props) => {
           ? error.response.data.msg
           : error.response.statusText;
       dispatch({ type: DELETE_CONTACT_FAIL, payload: message });
-      // setAlert(error.response.data.msg, "danger");
     }
   };
 
@@ -150,7 +141,6 @@ const ContactState = (props) => {
           type: UPDATE_CONTACT_SUCCESS,
           payload: contact,
         });
-        // setAlert("Contact Updated", "success");
       }, 1000);
     } catch (error) {
       const message =
@@ -158,7 +148,6 @@ const ContactState = (props) => {
           ? error.response.data.msg
           : error.response.statusText;
       dispatch({ type: UPDATE_CONTACT_FAIL, payload: message });
-      // setAlert(error.response.data.msg, "danger");
     }
   };
 
@@ -166,7 +155,7 @@ const ContactState = (props) => {
     dispatch({ type: SET_CURRENT, payload: contact });
   };
 
-  const clearCurrent = (contact) => {
+  const clearCurrent = () => {
     dispatch({ type: CLEAR_CURRENT });
   };
 

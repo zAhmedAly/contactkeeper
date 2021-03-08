@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import AuthContext from "../context/auth/AuthContext";
 
@@ -7,13 +7,21 @@ import {
   FaAddressBook,
   FaSignInAlt,
   FaSignOutAlt,
-  FaHome,
 } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 
 const Header = () => {
   const authContext = useContext(AuthContext);
-  const { isAuthenticated, user } = authContext;
+  const { isAuthenticated, logout, user, loadUser } = authContext;
+
+  useEffect(() => {
+    loadUser();
+    // eslint-disable-next-line
+  }, []);
+
+  const onLogout = () => {
+    logout();
+  };
   return (
     <Navbar
       collapseOnSelect
@@ -98,7 +106,8 @@ const Header = () => {
                   display: "flex",
                   alignItems: "center",
                 }}
-                href="#logout"
+                onClick={onLogout}
+                href="#!"
               >
                 <FaSignOutAlt />
                 Logout
