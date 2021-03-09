@@ -16,6 +16,7 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   CLEAR_ERRORS,
+  CLEAR_CONTACTS,
 } from "../types";
 
 const ContactReducer = (state, action) => {
@@ -33,6 +34,14 @@ const ContactReducer = (state, action) => {
         ...state,
         error: action.payload,
         contactsLoading: false,
+      };
+    case CLEAR_CONTACTS:
+      return {
+        ...state,
+        contacts: null,
+        filtered: null,
+        error: null,
+        current: null,
       };
     case FILTER_CONTACTS:
       return {

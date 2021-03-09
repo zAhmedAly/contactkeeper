@@ -49,7 +49,7 @@ main {
 }
 
 #cover-spin::after {
-  content: "Loading";
+  content: "";
   // content: url("../public/logo192.png");
   display: block;
   position: fixed;

@@ -4,14 +4,32 @@ import ContactItem from "./ContactItem";
 import ContactContext from "../context/contact/ContactContext";
 import SearchContacts from "./SearchContacts";
 import Alerts from "./Alerts";
+import AlertContext from "../context/alert/AlertContext";
 
 const Contacts = () => {
   const contactContext = useContext(ContactContext);
 
-  const { contacts, filtered, getContacts, contactsLoading } = contactContext;
+  const {
+    contacts,
+    filtered,
+    getContacts,
+    clearContacts,
+    contactsLoading,
+    error,
+    clearErrors,
+  } = contactContext;
+
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
 
   useEffect(() => {
     getContacts();
+
+    if (error) {
+      setAlert(error, "danger");
+      clearErrors();
+      clearContacts();
+    }
     // eslint-disable-next-line
   }, []);
 

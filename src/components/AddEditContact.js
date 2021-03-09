@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Button, Card, Form } from "react-bootstrap";
+import AlertContext from "../context/alert/AlertContext";
 import ContactContext from "../context/contact/ContactContext";
 
 const AddEditContact = () => {
@@ -21,24 +22,36 @@ const AddEditContact = () => {
     updateContact,
     current,
     clearCurrent,
+    error,
+    clearErrors,
   } = contactContext;
+
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
 
   const onChange = (e) => {
     setContact({ ...contact, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
-    if (current !== null) {
-      setContact(current);
+    if (error) {
+      setAlert(error, "danger");
+      clearErrors();
     } else {
-      setContact({
-        name: "",
-        email: "",
-        phone: "",
-        type: "personal",
-      });
+      if (current !== null) {
+        setContact(current);
+        // } else {
+        //   setContact({
+        //     name: "",
+        //     email: "",
+        //     phone: "",
+        //     type: "personal",
+        //   });
+        // }
+      }
     }
-  }, [current]);
+    // eslint-disable-next-line
+  }, [current, error]);
 
   const onSubmit = (e) => {
     e.preventDefault();

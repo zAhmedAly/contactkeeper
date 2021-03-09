@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Badge, Button, Card } from "react-bootstrap";
 import { FaPhone, FaEnvelopeOpen, FaTrashAlt, FaEdit } from "react-icons/fa";
+import AlertContext from "../context/alert/AlertContext";
 import ContactContext from "../context/contact/ContactContext";
 
 const ContactItem = ({ contact }) => {
@@ -10,12 +11,25 @@ const ContactItem = ({ contact }) => {
     deleteLoading,
     setCurrent,
     clearCurrent,
+    error,
+    clearErrors,
   } = contactContext;
 
-  const { id, name, email, phone, type } = contact;
+  const { _id, name, email, phone, type } = contact;
+
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+
+  useEffect(() => {
+    if (error) {
+      setAlert(error, "danger");
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const onDelete = () => {
-    deleteContact(id);
+    deleteContact(_id);
     clearCurrent();
   };
 
