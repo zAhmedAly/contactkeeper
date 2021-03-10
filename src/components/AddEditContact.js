@@ -30,28 +30,35 @@ const AddEditContact = () => {
   const { setAlert } = alertContext;
 
   const onChange = (e) => {
-    setContact({ ...contact, [e.target.name]: e.target.value });
+    if (e.target.name === "phone") {
+      const formattedPhone = handleInput(e.target.value);
+      setContact({ ...contact, phone: formattedPhone });
+    } else {
+      setContact({ ...contact, [e.target.name]: e.target.value });
+    }
   };
 
-  useEffect(() => {
-    if (error) {
-      setAlert(error, "danger");
-      clearErrors();
-    } else {
-      if (current !== null) {
-        setContact(current);
-        // } else {
-        //   setContact({
-        //     name: "",
-        //     email: "",
-        //     phone: "",
-        //     type: "personal",
-        //   });
-        // }
+  useEffect(
+    () => {
+      if (error) {
+        setAlert(error, "danger");
+        clearErrors();
+      } else {
+        if (current !== null) {
+          setContact(current);
+        } else {
+          setContact({
+            name: "",
+            email: "",
+            phone: "",
+            type: "personal",
+          });
+        }
       }
-    }
+    },
     // eslint-disable-next-line
-  }, [current, error]);
+    [current, error]
+  );
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -73,6 +80,12 @@ const AddEditContact = () => {
       type: "personal",
     });
     clearCurrent();
+  };
+
+  const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+  const handleInput = (value) => {
+    const newPhone = value.replace(phoneRegex, "($1) $2-$3");
+    return newPhone;
   };
 
   return (
@@ -115,7 +128,7 @@ const AddEditContact = () => {
               <Form.Control
                 type="text"
                 name="phone"
-                value={phone}
+                value={handleInput(phone)}
                 placeholder="Phone number xxx-xxx-xxxx"
                 onChange={onChange}
               />

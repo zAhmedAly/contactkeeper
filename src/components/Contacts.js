@@ -74,7 +74,7 @@ const Contacts = () => {
       <Alerts />
 
       {!contactsLoading &&
-        (contacts !== null ? (
+        (contacts !== null && contacts.length > 0 ? (
           filtered !== null ? (
             filtered.map((contact) => (
               <ContactItem key={contact._id} contact={contact} />
