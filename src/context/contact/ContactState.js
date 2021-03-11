@@ -42,7 +42,6 @@ const ContactState = (props) => {
     dispatch({ type: GET_CONTACTS_REQUEST });
     try {
       const res = await axios.get("/api/contacts");
-      console.log("getContacts res = ", res);
       setTimeout(() => {
         dispatch({
           type: GET_CONTACTS_SUCCESS,

@@ -1,7 +1,8 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import AddEditContact from "../components/AddEditContact";
 import Contacts from "../components/Contacts";
+import AuthContext from "../context/auth/AuthContext";
 import ContactContext from "../context/contact/ContactContext";
 
 const HomeScreen = () => {
@@ -9,6 +10,14 @@ const HomeScreen = () => {
 
   const { contactsLoading, addLoading, deleteLoading } = contactContext;
 
+  const authContext = useContext(AuthContext);
+  const { loadUser } = authContext;
+
+  useEffect(() => {
+    console.log("HomeScreen loadUser ....");
+    loadUser();
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
       {(contactsLoading || addLoading || deleteLoading) && (
