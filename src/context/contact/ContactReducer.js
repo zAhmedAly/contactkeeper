@@ -17,6 +17,7 @@ import {
   CLEAR_CURRENT,
   CLEAR_ERRORS,
   CLEAR_CONTACTS,
+  CLEAR_MESSAGES,
 } from "../types";
 
 const ContactReducer = (state, action) => {
@@ -34,6 +35,7 @@ const ContactReducer = (state, action) => {
         ...state,
         error: action.payload,
         contactsLoading: false,
+        message: null,
       };
     case CLEAR_CONTACTS:
       return {
@@ -42,6 +44,7 @@ const ContactReducer = (state, action) => {
         filtered: null,
         error: null,
         current: null,
+        message: null,
       };
     case FILTER_CONTACTS:
       return {
@@ -60,16 +63,20 @@ const ContactReducer = (state, action) => {
     case ADD_CONTACT_SUCCESS:
       return {
         ...state,
-        contacts: [action.payload, ...state.contacts],
+        contacts: [action.payload.contact, ...state.contacts],
         filtered:
-          state.filtered !== null ? [action.payload, ...state.filtered] : null,
+          state.filtered !== null
+            ? [action.payload.contact, ...state.filtered]
+            : null,
         addLoading: false,
+        message: action.payload.message,
       };
     case ADD_CONTACT_FAIL:
       return {
         ...state,
         error: action.payload,
         addLoading: false,
+        message: null,
       };
     case DELETE_CONTACT_REQUEST:
       return { ...state, deleteLoading: true };
@@ -84,12 +91,14 @@ const ContactReducer = (state, action) => {
             ? state.filtered.filter((contact) => action.payload !== contact._id)
             : null,
         deleteLoading: false,
+        message: "Contact Deleted ...",
       };
     case DELETE_CONTACT_FAIL:
       return {
         ...state,
         error: action.payload,
         deleteLoading: false,
+        message: null,
       };
     case UPDATE_CONTACT_REQUEST:
       return { ...state, addLoading: true };
@@ -97,21 +106,27 @@ const ContactReducer = (state, action) => {
       return {
         ...state,
         contacts: state.contacts.map((contact) =>
-          contact._id === action.payload._id ? action.payload : contact
+          contact._id === action.payload.contact._id
+            ? action.payload.contact
+            : contact
         ),
         filtered:
           state.filtered !== null
             ? state.filtered.map((contact) =>
-                contact._id === action.payload._id ? action.payload : contact
+                contact._id === action.payload.contact._id
+                  ? action.payload.contact
+                  : contact
               )
             : null,
         addLoading: false,
+        message: action.payload.message,
       };
     case UPDATE_CONTACT_FAIL:
       return {
         ...state,
         error: action.payload,
         addLoading: false,
+        message: null,
       };
     case SET_CURRENT:
       return {
@@ -127,6 +142,11 @@ const ContactReducer = (state, action) => {
       return {
         ...state,
         error: null,
+      };
+    case CLEAR_MESSAGES:
+      return {
+        ...state,
+        message: null,
       };
     default:
       return state;

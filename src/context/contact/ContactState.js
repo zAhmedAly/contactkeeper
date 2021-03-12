@@ -23,6 +23,7 @@ import {
   CLEAR_CURRENT,
   CLEAR_ERRORS,
   CLEAR_CONTACTS,
+  CLEAR_MESSAGES,
 } from "../types";
 
 const ContactState = (props) => {
@@ -31,6 +32,7 @@ const ContactState = (props) => {
     filtered: null,
     current: null,
     error: null,
+    message: null,
     contactsLoading: false,
     addLoading: false,
     deleteLoading: false,
@@ -81,6 +83,7 @@ const ContactState = (props) => {
 
     try {
       const res = await axios.post("/api/contacts", contact, config);
+      console.log("res.data = ", res.data);
       setTimeout(() => {
         dispatch({
           type: ADD_CONTACT_SUCCESS,
@@ -157,6 +160,9 @@ const ContactState = (props) => {
   // Clear Errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
+  // Clear Messages
+  const clearMessages = () => dispatch({ type: CLEAR_MESSAGES });
+
   return (
     <ContactContext.Provider
       value={{
@@ -164,6 +170,7 @@ const ContactState = (props) => {
         filtered: state.filtered,
         current: state.current,
         error: state.error,
+        message: state.message,
         contactsLoading: state.contactsLoading,
         addLoading: state.addLoading,
         deleteLoading: state.deleteLoading,
@@ -177,6 +184,7 @@ const ContactState = (props) => {
         setCurrent,
         clearCurrent,
         clearErrors,
+        clearMessages,
       }}
     >
       {props.children}

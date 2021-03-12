@@ -17,19 +17,30 @@ const Contacts = () => {
     contactsLoading,
     error,
     clearErrors,
+    message,
+    clearMessages,
   } = contactContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
   useEffect(() => {
-    getContacts();
-
     if (error) {
       setAlert(error, "danger");
       clearErrors();
       clearContacts();
+    } else if (message) {
+      console.log("MESSAGE = ", message);
+      setAlert(message, "success");
+      clearMessages();
     }
+
+    // eslint-disable-next-line
+  }, [error, message]);
+
+  useEffect(() => {
+    getContacts();
+
     // eslint-disable-next-line
   }, []);
 
@@ -70,8 +81,7 @@ const Contacts = () => {
       </h3>
 
       <SearchContacts />
-
-      <Alerts />
+      {!contactsLoading && <Alerts />}
 
       {!contactsLoading &&
         (contacts !== null && contacts.length > 0 ? (
