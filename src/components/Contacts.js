@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from 'react';
-import { Badge } from 'react-bootstrap';
-import ContactItem from './ContactItem';
-import ContactContext from '../context/contact/ContactContext';
-import SearchContacts from './SearchContacts';
-import Alerts from './Alerts';
-import AlertContext from '../context/alert/AlertContext';
+import React, { useContext, useEffect } from "react";
+import { Badge } from "react-bootstrap";
+import ContactItem from "./ContactItem";
+import ContactContext from "../context/contact/ContactContext";
+import SearchContacts from "./SearchContacts";
+import Alerts from "./Alerts";
+import AlertContext from "../context/alert/AlertContext";
+import AuthContext from "../context/auth/AuthContext";
 
 const Contacts = () => {
   const contactContext = useContext(ContactContext);
@@ -14,6 +15,7 @@ const Contacts = () => {
     filtered,
     getContacts,
     clearContacts,
+    clearFilter,
     contactsLoading,
     error,
     clearErrors,
@@ -24,6 +26,9 @@ const Contacts = () => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
+  const authContext = useContext(AuthContext);
+  const { logout } = authContext;
+
   useEffect(() => {
     getContacts();
 
@@ -33,16 +38,17 @@ const Contacts = () => {
   useEffect(() => {
     if (error) {
       let errMsg = error;
-      if (error === 'Internal Server Error') {
+      if (error === "Internal Server Error") {
         errMsg = `${error} ... Please Try again`;
+      } else if (error === "Session Expired, please Login") {
+        clearContacts();
+        clearFilter();
+        logout();
       }
-      setAlert(errMsg, 'danger');
+      setAlert(errMsg, "danger");
       clearErrors();
-      //clearContacts();
     } else if (message) {
-      console.log('Contacts useEffect inside message');
-      console.log('MESSAGE = ', message);
-      setAlert(message, 'success');
+      setAlert(message, "success");
       clearMessages();
     }
 
@@ -53,16 +59,16 @@ const Contacts = () => {
     <>
       <h3
         style={{
-          color: 'darkblue',
-          fontWeight: 'bold',
-          alignContent: 'center',
-          justifyContent: 'center',
-          margin: '0.5rem 0',
+          color: "darkblue",
+          fontWeight: "bold",
+          alignContent: "center",
+          justifyContent: "center",
+          margin: "0.5rem 0",
         }}
       >
-        {' '}
+        {" "}
         <strong> Your Contacts</strong>
-        {/* {!contactsLoading && (
+        {!contactsLoading && contacts !== null && (
           <Badge
             style={{
               float: "right",
@@ -82,7 +88,7 @@ const Contacts = () => {
               ? `${filtered.length} Contacts`
               : `${contacts.length} Contacts`}
           </Badge>
-        )} */}
+        )}
       </h3>
 
       <SearchContacts />
@@ -102,13 +108,13 @@ const Contacts = () => {
         ) : (
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignitems: 'center',
-              marginTop: '10%',
+              display: "flex",
+              justifyContent: "center",
+              alignitems: "center",
+              marginTop: "10%",
             }}
           >
-            {' '}
+            {" "}
             <span> No Contacts Loaded ... </span>
           </div>
         ))}

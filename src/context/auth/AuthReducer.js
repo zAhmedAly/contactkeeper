@@ -9,7 +9,7 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   USER_LOADED,
-} from '../types';
+} from "../types";
 
 const AuthReducer = (state, action) => {
   switch (action.type) {
@@ -28,7 +28,7 @@ const AuthReducer = (state, action) => {
 
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
-      localStorage.setItem('token', action.payload.token);
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
         ...action.payload,
@@ -40,7 +40,7 @@ const AuthReducer = (state, action) => {
     case LOGIN_FAIL:
     case REGISTER_FAIL:
     case LOGOUT:
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       return {
         ...state,
         token: null,

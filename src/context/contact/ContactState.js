@@ -1,8 +1,8 @@
-import { useReducer } from 'react';
-import axios from 'axios';
+import { useReducer } from "react";
+import axios from "axios";
 
-import ContactContext from './ContactContext';
-import contactReducer from './ContactReducer';
+import ContactContext from "./ContactContext";
+import contactReducer from "./ContactReducer";
 
 import {
   GET_CONTACTS_REQUEST,
@@ -24,7 +24,7 @@ import {
   CLEAR_ERRORS,
   CLEAR_CONTACTS,
   CLEAR_MESSAGES,
-} from '../types';
+} from "../types";
 
 const ContactState = (props) => {
   const initialState = {
@@ -43,7 +43,7 @@ const ContactState = (props) => {
   const getContacts = async () => {
     dispatch({ type: GET_CONTACTS_REQUEST });
     try {
-      const res = await axios.get('/api/contacts');
+      const res = await axios.get("/api/contacts");
       setTimeout(() => {
         dispatch({
           type: GET_CONTACTS_SUCCESS,
@@ -77,18 +77,19 @@ const ContactState = (props) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
 
     try {
-      const res = await axios.post('/api/contacts', contact, config);
-      console.log('res.data = ', res.data);
+      const res = await axios.post("/api/contacts", contact, config);
+      console.log("res.data = ", res.data);
       setTimeout(() => {
         dispatch({
           type: ADD_CONTACT_SUCCESS,
           payload: res.data,
         });
+        clearFilter();
       }, 1000);
     } catch (error) {
       const message =
@@ -123,7 +124,7 @@ const ContactState = (props) => {
     dispatch({ type: UPDATE_CONTACT_REQUEST });
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
 
