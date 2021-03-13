@@ -1,15 +1,15 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Button, Card, Form } from "react-bootstrap";
-import AlertContext from "../context/alert/AlertContext";
-import ContactContext from "../context/contact/ContactContext";
+import React, { useState, useContext, useEffect } from 'react';
+import { Button, Card, Form } from 'react-bootstrap';
+import AlertContext from '../context/alert/AlertContext';
+import ContactContext from '../context/contact/ContactContext';
 
 const AddEditContact = () => {
   const [contact, setContact] = useState({
-    id: "",
-    name: "",
-    email: "",
-    phone: "",
-    type: "personal",
+    id: '',
+    name: '',
+    email: '',
+    phone: '',
+    type: 'personal',
   });
 
   const { name, email, phone, type } = contact;
@@ -30,7 +30,7 @@ const AddEditContact = () => {
   const { setAlert } = alertContext;
 
   const onChange = (e) => {
-    if (e.target.name === "phone") {
+    if (e.target.name === 'phone') {
       const formattedPhone = handleInput(e.target.value);
       setContact({ ...contact, phone: formattedPhone });
     } else {
@@ -40,24 +40,24 @@ const AddEditContact = () => {
 
   useEffect(
     () => {
-      if (error) {
-        setAlert(error, "danger");
-        clearErrors();
+      // if (error) {
+      //   setAlert(`AddEditContact - ${error}`, 'danger');
+      //   clearErrors();
+      // } else {
+      if (current !== null) {
+        setContact(current);
       } else {
-        if (current !== null) {
-          setContact(current);
-        } else {
-          setContact({
-            name: "",
-            email: "",
-            phone: "",
-            type: "personal",
-          });
-        }
+        setContact({
+          name: '',
+          email: '',
+          phone: '',
+          type: 'personal',
+        });
       }
+      // }
     },
     // eslint-disable-next-line
-    [current, error]
+    [current]
   );
 
   const onSubmit = (e) => {
@@ -73,92 +73,92 @@ const AddEditContact = () => {
 
   const clearForm = () => {
     setContact({
-      id: "",
-      name: "",
-      email: "",
-      phone: "",
-      type: "personal",
+      id: '',
+      name: '',
+      email: '',
+      phone: '',
+      type: 'personal',
     });
     clearCurrent();
   };
 
   const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   const handleInput = (value) => {
-    const newPhone = value.replace(phoneRegex, "($1) $2-$3");
+    const newPhone = value.replace(phoneRegex, '($1) $2-$3');
     return newPhone;
   };
 
   return (
     <>
-      <h2 className="my-2" style={{ color: "darkblue", textAlign: "center" }}>
+      <h2 className='my-2' style={{ color: 'darkblue', textAlign: 'center' }}>
         {current ? (
           <strong>Update Contact</strong>
         ) : (
           <strong>Add Contact</strong>
         )}
       </h2>
-      <Card className="mb-3">
+      <Card className='mb-3'>
         <Card.Body>
           <Form onSubmit={onSubmit}>
-            <Form.Group controlId="formBasicContactName">
+            <Form.Group controlId='formBasicContactName'>
               <Form.Label>Contact Name *</Form.Label>
               <Form.Control
-                type="text"
-                name="name"
+                type='text'
+                name='name'
                 value={name}
-                placeholder="Enter contact name"
+                placeholder='Enter contact name'
                 onChange={onChange}
               />
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId='formBasicEmail'>
               <Form.Label>Email address *</Form.Label>
               <Form.Control
-                type="email"
-                name="email"
+                type='email'
+                name='email'
                 value={email}
-                placeholder="user@example.com"
+                placeholder='user@example.com'
                 onChange={onChange}
               />
-              <Form.Text className="text-muted">
+              <Form.Text className='text-muted'>
                 We'll never share your email with anyone else.
               </Form.Text>
             </Form.Group>
-            <Form.Group controlId="formBasicPhone">
+            <Form.Group controlId='formBasicPhone'>
               <Form.Label>Phone *</Form.Label>
               <Form.Control
-                type="text"
-                name="phone"
+                type='text'
+                name='phone'
                 value={handleInput(phone)}
-                placeholder="Phone number xxx-xxx-xxxx"
+                placeholder='Phone number xxx-xxx-xxxx'
                 onChange={onChange}
               />
             </Form.Group>
-            <Form.Group controlId="formBasicCheckbox">
-              <Form.Label className="mr-4">Contact Type </Form.Label>
+            <Form.Group controlId='formBasicCheckbox'>
+              <Form.Label className='mr-4'>Contact Type </Form.Label>
               <Form.Check
                 inline
-                type="radio"
-                label="Personal"
-                name="type"
-                value="personal"
-                checked={type === "personal"}
+                type='radio'
+                label='Personal'
+                name='type'
+                value='personal'
+                checked={type === 'personal'}
                 onChange={onChange}
               />
               <Form.Check
                 inline
-                type="radio"
-                label="Professional"
-                name="type"
-                value="professional"
-                checked={type === "professional"}
+                type='radio'
+                label='Professional'
+                name='type'
+                value='professional'
+                checked={type === 'professional'}
                 onChange={onChange}
               />
             </Form.Group>
 
             <Button
-              variant="primary"
-              type="submit"
-              className="btn-block"
+              variant='primary'
+              type='submit'
+              className='btn-block'
               disabled={!name || !email || !phone}
             >
               {addLoading ? (
@@ -174,15 +174,15 @@ const AddEditContact = () => {
                   Saving ...
                 </>
               ) : current ? (
-                "Update Contact"
+                'Update Contact'
               ) : (
-                "Add Contact"
+                'Add Contact'
               )}
               {/* {addLoading && <div id="cover-spin"></div>}
               Add Contact */}
             </Button>
             {current && (
-              <Button variant="light" className="btn-block" onClick={clearForm}>
+              <Button variant='light' className='btn-block' onClick={clearForm}>
                 Clear
               </Button>
             )}
