@@ -11,6 +11,8 @@ const AddEditContact = () => {
     type: "personal",
   });
 
+  const [open, setOpen] = useState(false);
+
   const { name, email, phone, type } = contact;
 
   const contactContext = useContext(ContactContext);
@@ -80,6 +82,13 @@ const AddEditContact = () => {
 
   return (
     <>
+      <Button
+        onClick={() => setOpen(!open)}
+        aria-controls="example-collapse-text"
+        aria-expanded={open}
+      >
+        Add Contact
+      </Button>
       <h2 className="my-2" style={{ color: "darkblue", textAlign: "center" }}>
         {current ? (
           <strong>Update Contact</strong>

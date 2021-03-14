@@ -3,7 +3,6 @@ import { Badge } from "react-bootstrap";
 import ContactItem from "./ContactItem";
 import ContactContext from "../context/contact/ContactContext";
 import SearchContacts from "./SearchContacts";
-import Alerts from "./Alerts";
 import AlertContext from "../context/alert/AlertContext";
 import AuthContext from "../context/auth/AuthContext";
 
@@ -92,7 +91,7 @@ const Contacts = () => {
       </h3>
 
       <SearchContacts />
-      {!contactsLoading && <Alerts />}
+      {/* {!contactsLoading && <Alerts />} */}
 
       {!contactsLoading &&
         (contacts !== null && contacts.length > 0 ? (

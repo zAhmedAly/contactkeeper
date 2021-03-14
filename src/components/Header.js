@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import AuthContext from "../context/auth/AuthContext";
 
 import {
@@ -28,7 +28,7 @@ const Header = () => {
       expand="lg"
       bg="primary"
       fixed="top"
-      defaultExpanded="false"
+      // defaultExpanded="false"
     >
       <Container
         style={{
@@ -48,27 +48,41 @@ const Header = () => {
             <FaAddressBook /> Contact Keeper
           </Navbar.Brand>
         </LinkContainer>
-
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        {/* {user && (
+          <Navbar.Text
+            style={{
+              color: "white",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            Welcome {user.name}
+          </Navbar.Text>
+        )} */}
+        <Navbar.Toggle
+          aria-controls="responsive-navbar-nav"
+          style={{ color: "white" }}
+        />
         <Navbar.Collapse id="responsive-navbar-nav" style={{ color: "white" }}>
-          {user && (
-            <Navbar.Text
-              style={{
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              Welcome {user.name}
-            </Navbar.Text>
-          )}
-          <Nav className="ml-auto">
+          <Nav className="ml-auto" style={{ color: "white" }}>
             <LinkContainer
               to="/about"
               style={{ color: "white", display: "flex", alignItems: "center" }}
             >
               <Nav.Link>About</Nav.Link>
             </LinkContainer>
+            {user && (
+              <NavDropdown title={user.name} id="collasible-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
+                <LinkContainer to="/">
+                  <NavDropdown.Item>Contacts</NavDropdown.Item>
+                </LinkContainer>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={onLogout} href="#!">
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            )}
 
             {!isAuthenticated && (
               <>
