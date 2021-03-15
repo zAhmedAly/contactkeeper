@@ -87,7 +87,8 @@ const AddEditContact = () => {
 
   return (
     <div className="mb-3">
-      {!open && !addLoading ? (
+      {/* {!open && !addLoading ? ( */}
+      <div className="d-lg-none d-md-block">
         <Button
           onClick={() => setOpen(!open)}
           aria-controls="example-collapse-text"
@@ -96,115 +97,109 @@ const AddEditContact = () => {
         >
           <FaPlus /> Add Contact
         </Button>
-      ) : (
-        <div className="d-lg-block d-md-none">
-          <h2
-            className="my-2"
-            style={{ color: "darkblue", textAlign: "center" }}
-          >
-            {current ? (
-              <strong>Update Contact</strong>
-            ) : (
-              <strong>Add Contact</strong>
-            )}
-          </h2>
+      </div>
+      {/* ) : ( */}
+      <div className="d-none d-lg-block">
+        <h2 className="my-2" style={{ color: "darkblue", textAlign: "center" }}>
+          {current ? (
+            <strong>Update Contact</strong>
+          ) : (
+            <strong>Add Contact</strong>
+          )}
+        </h2>
 
-          <Card className="mb-3">
-            <Card.Body>
-              <Form onSubmit={onSubmit}>
-                <Form.Group controlId="formBasicContactName">
-                  <Form.Label>Contact Name *</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="name"
-                    value={name}
-                    placeholder="Enter contact name"
-                    onChange={onChange}
-                  />
-                </Form.Group>
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Email address *</Form.Label>
-                  <Form.Control
-                    type="email"
-                    name="email"
-                    value={email}
-                    placeholder="user@example.com"
-                    onChange={onChange}
-                  />
-                  <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                  </Form.Text>
-                </Form.Group>
-                <Form.Group controlId="formBasicPhone">
-                  <Form.Label>Phone *</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="phone"
-                    value={handleInput(phone)}
-                    placeholder="Phone number xxx-xxx-xxxx"
-                    onChange={onChange}
-                  />
-                </Form.Group>
-                <Form.Group controlId="formBasicCheckbox">
-                  <Form.Label className="mr-4">Contact Type </Form.Label>
-                  <Form.Check
-                    inline
-                    type="radio"
-                    label="Personal"
-                    name="type"
-                    value="personal"
-                    checked={type === "personal"}
-                    onChange={onChange}
-                  />
-                  <Form.Check
-                    inline
-                    type="radio"
-                    label="Professional"
-                    name="type"
-                    value="professional"
-                    checked={type === "professional"}
-                    onChange={onChange}
-                  />
-                </Form.Group>
+        <Card className="mb-3">
+          <Card.Body>
+            <Form onSubmit={onSubmit}>
+              <Form.Group controlId="formBasicContactName">
+                <Form.Label>Contact Name *</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={name}
+                  placeholder="Enter contact name"
+                  onChange={onChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address *</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={email}
+                  placeholder="user@example.com"
+                  onChange={onChange}
+                />
+                <Form.Text className="text-muted">
+                  We'll never share your email with anyone else.
+                </Form.Text>
+              </Form.Group>
+              <Form.Group controlId="formBasicPhone">
+                <Form.Label>Phone *</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="phone"
+                  value={handleInput(phone)}
+                  placeholder="Phone number xxx-xxx-xxxx"
+                  onChange={onChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="formBasicCheckbox">
+                <Form.Label className="mr-4">Contact Type </Form.Label>
+                <Form.Check
+                  inline
+                  type="radio"
+                  label="Personal"
+                  name="type"
+                  value="personal"
+                  checked={type === "personal"}
+                  onChange={onChange}
+                />
+                <Form.Check
+                  inline
+                  type="radio"
+                  label="Professional"
+                  name="type"
+                  value="professional"
+                  checked={type === "professional"}
+                  onChange={onChange}
+                />
+              </Form.Group>
 
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className="btn-block"
-                  disabled={!name || !email || !phone}
-                >
-                  {addLoading ? (
-                    <>
-                      {/* <div id="cover-spin"></div> */}
-                      {/* <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />{" "} */}
-                      Saving ...
-                    </>
-                  ) : current ? (
-                    "Update Contact"
-                  ) : (
-                    "Add Contact"
-                  )}
-                  {/* {addLoading && <div id="cover-spin"></div>}
-              Add Contact */}
-                </Button>
-                <Button
-                  variant="light"
-                  className="btn-block"
-                  onClick={clearForm}
-                >
-                  Cancel
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </div>
-      )}
+              <Button
+                variant="primary"
+                type="submit"
+                className="btn-block"
+                disabled={!name || !email || !phone}
+              >
+                {addLoading ? (
+                  <>
+                    {/* <div id="cover-spin"></div> */}
+                    {/* <Spinner
+             as="span"
+             animation="border"
+             size="sm"
+             role="status"
+             aria-hidden="true"
+           />{" "} */}
+                    Saving ...
+                  </>
+                ) : current ? (
+                  "Update Contact"
+                ) : (
+                  "Add Contact"
+                )}
+                {/* {addLoading && <div id="cover-spin"></div>}
+       Add Contact */}
+              </Button>
+              <Button variant="light" className="btn-block" onClick={clearForm}>
+                Cancel
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
+      </div>
+      {/* )} */}
     </div>
   );
 };

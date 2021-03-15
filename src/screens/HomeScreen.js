@@ -26,15 +26,15 @@ const HomeScreen = () => {
       )}
       <Row>
         <Col />
-        <Col md={5}>{!contactsLoading && <Alerts />}</Col>
+        <Col lg={5}>{!contactsLoading && <Alerts />}</Col>
         <Col />
       </Row>
       <Row>
-        <Col md={5}>
+        <Col lg={5}>
           <AddEditContact />
         </Col>
         <Col />
-        <Col md={5}>
+        <Col lg={5}>
           <Contacts />
         </Col>
       </Row>
