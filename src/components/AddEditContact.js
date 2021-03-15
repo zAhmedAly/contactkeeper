@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Button, Card, Form } from "react-bootstrap";
+import { FaPlus } from "react-icons/fa";
+
 import ContactContext from "../context/contact/ContactContext";
 
 const AddEditContact = () => {
@@ -10,8 +12,6 @@ const AddEditContact = () => {
     phone: "",
     type: "personal",
   });
-
-  const [open, setOpen] = useState(false);
 
   const { name, email, phone, type } = contact;
 
@@ -24,6 +24,8 @@ const AddEditContact = () => {
     current,
     clearCurrent,
   } = contactContext;
+
+  const [open, setOpen] = useState(false);
 
   const onChange = (e) => {
     if (e.target.name === "phone") {
@@ -38,6 +40,7 @@ const AddEditContact = () => {
     () => {
       if (current !== null) {
         setContact(current);
+        setOpen(true);
       } else {
         setContact({
           name: "",
@@ -46,7 +49,6 @@ const AddEditContact = () => {
           type: "personal",
         });
       }
-      // }
     },
     // eslint-disable-next-line
     [current]
@@ -60,6 +62,8 @@ const AddEditContact = () => {
       updateContact(contact);
     }
     clearForm();
+    setOpen(!open);
+
     clearCurrent();
   };
 
@@ -72,6 +76,7 @@ const AddEditContact = () => {
       type: "personal",
     });
     clearCurrent();
+    setOpen(!open);
   };
 
   const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -81,114 +86,126 @@ const AddEditContact = () => {
   };
 
   return (
-    <>
-      <Button
-        onClick={() => setOpen(!open)}
-        aria-controls="example-collapse-text"
-        aria-expanded={open}
-      >
-        Add Contact
-      </Button>
-      <h2 className="my-2" style={{ color: "darkblue", textAlign: "center" }}>
-        {current ? (
-          <strong>Update Contact</strong>
-        ) : (
-          <strong>Add Contact</strong>
-        )}
-      </h2>
-      <Card className="mb-3">
-        <Card.Body>
-          <Form onSubmit={onSubmit}>
-            <Form.Group controlId="formBasicContactName">
-              <Form.Label>Contact Name *</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={name}
-                placeholder="Enter contact name"
-                onChange={onChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address *</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                value={email}
-                placeholder="user@example.com"
-                onChange={onChange}
-              />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
-            <Form.Group controlId="formBasicPhone">
-              <Form.Label>Phone *</Form.Label>
-              <Form.Control
-                type="text"
-                name="phone"
-                value={handleInput(phone)}
-                placeholder="Phone number xxx-xxx-xxxx"
-                onChange={onChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formBasicCheckbox">
-              <Form.Label className="mr-4">Contact Type </Form.Label>
-              <Form.Check
-                inline
-                type="radio"
-                label="Personal"
-                name="type"
-                value="personal"
-                checked={type === "personal"}
-                onChange={onChange}
-              />
-              <Form.Check
-                inline
-                type="radio"
-                label="Professional"
-                name="type"
-                value="professional"
-                checked={type === "professional"}
-                onChange={onChange}
-              />
-            </Form.Group>
+    <div className="mb-3">
+      {!open && !addLoading ? (
+        <Button
+          onClick={() => setOpen(!open)}
+          aria-controls="example-collapse-text"
+          aria-expanded={open}
+          className="btn-block btn-lg"
+        >
+          <FaPlus /> Add Contact
+        </Button>
+      ) : (
+        <div className="d-lg-block d-md-none">
+          <h2
+            className="my-2"
+            style={{ color: "darkblue", textAlign: "center" }}
+          >
+            {current ? (
+              <strong>Update Contact</strong>
+            ) : (
+              <strong>Add Contact</strong>
+            )}
+          </h2>
 
-            <Button
-              variant="primary"
-              type="submit"
-              className="btn-block"
-              disabled={!name || !email || !phone}
-            >
-              {addLoading ? (
-                <>
-                  {/* <div id="cover-spin"></div> */}
-                  {/* <Spinner
+          <Card className="mb-3">
+            <Card.Body>
+              <Form onSubmit={onSubmit}>
+                <Form.Group controlId="formBasicContactName">
+                  <Form.Label>Contact Name *</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    value={name}
+                    placeholder="Enter contact name"
+                    onChange={onChange}
+                  />
+                </Form.Group>
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Label>Email address *</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    value={email}
+                    placeholder="user@example.com"
+                    onChange={onChange}
+                  />
+                  <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                  </Form.Text>
+                </Form.Group>
+                <Form.Group controlId="formBasicPhone">
+                  <Form.Label>Phone *</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="phone"
+                    value={handleInput(phone)}
+                    placeholder="Phone number xxx-xxx-xxxx"
+                    onChange={onChange}
+                  />
+                </Form.Group>
+                <Form.Group controlId="formBasicCheckbox">
+                  <Form.Label className="mr-4">Contact Type </Form.Label>
+                  <Form.Check
+                    inline
+                    type="radio"
+                    label="Personal"
+                    name="type"
+                    value="personal"
+                    checked={type === "personal"}
+                    onChange={onChange}
+                  />
+                  <Form.Check
+                    inline
+                    type="radio"
+                    label="Professional"
+                    name="type"
+                    value="professional"
+                    checked={type === "professional"}
+                    onChange={onChange}
+                  />
+                </Form.Group>
+
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="btn-block"
+                  disabled={!name || !email || !phone}
+                >
+                  {addLoading ? (
+                    <>
+                      {/* <div id="cover-spin"></div> */}
+                      {/* <Spinner
                     as="span"
                     animation="border"
                     size="sm"
                     role="status"
                     aria-hidden="true"
                   />{" "} */}
-                  Saving ...
-                </>
-              ) : current ? (
-                "Update Contact"
-              ) : (
-                "Add Contact"
-              )}
-              {/* {addLoading && <div id="cover-spin"></div>}
+                      Saving ...
+                    </>
+                  ) : current ? (
+                    "Update Contact"
+                  ) : (
+                    "Add Contact"
+                  )}
+                  {/* {addLoading && <div id="cover-spin"></div>}
               Add Contact */}
-            </Button>
-            {current && (
-              <Button variant="light" className="btn-block" onClick={clearForm}>
-                Clear
-              </Button>
-            )}
-          </Form>
-        </Card.Body>
-      </Card>
-    </>
+                </Button>
+                <Button
+                  variant="light"
+                  className="btn-block"
+                  onClick={clearForm}
+                >
+                  Cancel
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </div>
+      )}
+    </div>
   );
 };
 
