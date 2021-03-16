@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { useContext, useEffect } from "react";
+import { Col, Row } from "react-bootstrap";
 import AddEditContact from "../components/AddEditContact";
 import Alerts from "../components/Alerts";
 import Contacts from "../components/Contacts";
@@ -8,7 +8,6 @@ import ContactContext from "../context/contact/ContactContext";
 
 const HomeScreen = () => {
   const contactContext = useContext(ContactContext);
-
   const { contactsLoading, addLoading, deleteLoading } = contactContext;
 
   const authContext = useContext(AuthContext);
@@ -30,7 +29,7 @@ const HomeScreen = () => {
         <Col />
       </Row>
       <Row>
-        <Col lg={5}>
+        <Col lg={6}>
           <AddEditContact />
         </Col>
         <Col />
